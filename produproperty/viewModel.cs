@@ -61,7 +61,7 @@ namespace produproperty
 
         public int select;
 
-        public void clipboard(TextControlPasteEventArgs e)
+        public async void clipboard(TextControlPasteEventArgs e)
         {
             if (writetext)
             {
@@ -71,7 +71,8 @@ namespace produproperty
             e.Handled = true;
 
             DataPackageView con = Windows.ApplicationModel.DataTransfer.Clipboard.GetContent();
-           string str= _m.clipboard(con);
+            string str = await _m.clipboard(con);
+            tianjia(str);
         }
 
         public async void accessfolder()
@@ -86,6 +87,26 @@ namespace produproperty
         }
 
         private model _m;
+
+        private void tianjia(string str)
+        {
+            int n;
+            n = select;
+            int i;
+            for (i = 0; n > 0 && i < text.Length; i++)
+            {
+                if (text[i] != '\r' && text[i] != '\n')
+                {
+                    n--;
+                }
+            }
+            text = text.Insert(i, str);
+            selectchange(select + str.Length + 1, 0);
+
+            //string t = text.Replace("\r\n", "\n");
+            //t = t.Insert(select, str);
+            //text = t.Replace("\n", "\r\n");
+        }
         
     }
 }

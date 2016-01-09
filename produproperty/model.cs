@@ -149,7 +149,46 @@ namespace produproperty
                 }
             }
 
+            //文件
+            if (con.Contains(StandardDataFormats.StorageItems))
+            {
+                var filelist = await con.GetStorageItemsAsync();
+                StorageFile file = filelist.OfType<StorageFile>().First();
+                return await imgfolder(file);
+            }
+
             return str;
+        }
+
+        public async Task<string> imgfolder(StorageFile file)
+        {
+            string str = "image";
+            StorageFolder image = null;
+            try
+            {
+                image = await _folder.GetFolderAsync(str);
+            }
+            catch
+            {
+
+
+            }
+            if (image == null)
+            {
+                image = await _folder.CreateFolderAsync(str, CreationCollisionOption.OpenIfExists);
+            }
+            file = await file.CopyAsync(image, file.Name, NameCollisionOption.GenerateUniqueName);
+
+            if (file.FileType == ".png" || file.FileType == ".jpg")
+            {
+                str = $"![这里写图片描述](image/{file.Name})";
+                return str;
+            }
+            else
+            {
+                str = $"[{file.Name}](image/{file.Name})";
+                return str;
+            }
         }
 
         public async void accessfolder(StorageFolder folder)

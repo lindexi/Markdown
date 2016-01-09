@@ -93,5 +93,9 @@ namespace produproperty
             frame.Navigate(typeof(option), view);
         }
 
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);            
+        }
     }
 }

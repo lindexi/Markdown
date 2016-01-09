@@ -228,10 +228,21 @@ namespace produproperty
                     await transaction.CommitAsync();
                 }
             }
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                name = "请输入标题";
+                return;
+            }
+            if (!_open)
+            {
+                file = await file.CopyAsync(folder, name + ".md", NameCollisionOption.GenerateUniqueName);
+                _open = true;
+            }
 
-            file = await file.CopyAsync(folder, name + ".md", NameCollisionOption.GenerateUniqueName);
-            
+            reminder = reminder = "保存文件" + file.Path;
         }
+
+       
 
         public string _text;
         public string _name;
@@ -268,7 +279,7 @@ namespace produproperty
                 //没有默认位置
 
                 writetext = true;
-                text = "请选择默认保存位置";
+                _text = "请选择默认保存位置";
             }
 
             //image 文件夹
@@ -305,8 +316,20 @@ namespace produproperty
 
             if (open)
             {
-
+                using (IRandomAccessStream readStream = await _file.OpenAsync(FileAccessMode.Read))
+                {
+                    using (DataReader dataReader = new DataReader(readStream))
+                    {
+                        UInt64 size = readStream.Size;
+                        if (size <= UInt32.MaxValue)
+                        {
+                            UInt32 numBytesLoaded = await dataReader.LoadAsync((UInt32)size);
+                            _text = dataReader.ReadString(numBytesLoaded);
+                        }
+                    }
+                }
             }
+            _name = file.DisplayName;
         }
     }
 }

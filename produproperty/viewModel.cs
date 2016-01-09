@@ -11,7 +11,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace produproperty
 {
-    class viewModel:ViewModel.notify_property
+    class viewModel : ViewModel.notify_property
     {
         public viewModel()
         {
@@ -61,6 +61,18 @@ namespace produproperty
 
         public int select;
 
+        public string addressfolder
+        {
+            set
+            {
+                OnPropertyChanged();
+            }
+            get
+            {
+                return _m.folder.Path;
+            }
+        }
+
         public async void clipboard(TextControlPasteEventArgs e)
         {
             if (writetext)
@@ -69,10 +81,37 @@ namespace produproperty
             }
 
             e.Handled = true;
-
             DataPackageView con = Windows.ApplicationModel.DataTransfer.Clipboard.GetContent();
             string str = await _m.clipboard(con);
             tianjia(str);
+        }
+
+        public void storage()
+        {
+            if (writetext)
+            {
+                return;
+            }
+            _m.storage();
+        }
+
+        public async void dropimg(object sender, Windows.UI.Xaml.DragEventArgs e)
+        {
+            if (writetext)
+            {
+                return;
+            }
+            var defer = e.GetDeferral();
+            try
+            {
+                DataPackageView dataView = e.DataView;
+                string str = await _m.clipboard(dataView);
+                tianjia(str);
+            }
+            finally
+            {
+                defer.Complete();
+            }
         }
 
         public async void accessfolder()
@@ -84,6 +123,11 @@ namespace produproperty
             {
                 _m.accessfolder(folder);
             }
+        }
+
+        public void file_open()
+        {
+
         }
 
         private model _m;
@@ -107,6 +151,6 @@ namespace produproperty
             //t = t.Insert(select, str);
             //text = t.Replace("\n", "\r\n");
         }
-        
+
     }
 }

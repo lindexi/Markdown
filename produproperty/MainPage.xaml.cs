@@ -22,9 +22,76 @@ namespace produproperty
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        viewModel view;
         public MainPage()
         {
+            view = new viewModel();
             this.InitializeComponent();
+            view.selectchange = selectchange;
+            text.Paste += Text_Paste;
+            this.DataContext = view;
         }
+
+        private void Text_Paste(object sender, TextControlPasteEventArgs e)
+        {
+            view.clipboard(e);
+        }
+
+        private void Grid_DragOver(object sender, DragEventArgs e)
+        {
+            e.AcceptedOperation = Windows.ApplicationModel.DataTransfer.DataPackageOperation.Copy;
+            e.DragUIOverride.Caption = "打开";
+            e.Handled = true;
+        }
+
+        private void text_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+            view.select = text.SelectionStart;
+        }
+
+        private void selectchange(int select, int selecti)
+        {
+            text.SelectionStart = select;
+            text.SelectionLength = selecti;
+        }
+
+        private bool _ctrl;
+
+        private void text_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key.Equals(Windows.System.VirtualKey.Control))
+            {
+                _ctrl = true;
+            }
+            else if (e.Key == Windows.System.VirtualKey.V && _ctrl)
+            {
+
+            }
+
+            if (_ctrl)
+            {
+                if (e.Key == Windows.System.VirtualKey.Z)
+                {
+
+                }
+            }
+
+            e.Handled = true;
+        }
+
+        private void text_KeyUp(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key.Equals(Windows.System.VirtualKey.Control))
+            {
+                _ctrl = false;
+            }
+        }
+
+        private void option(object sender, RoutedEventArgs e)
+        {
+            Frame frame = Window.Current.Content as Frame;
+            frame.Navigate(typeof(option), view);
+        }
+
     }
 }

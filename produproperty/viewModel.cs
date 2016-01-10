@@ -86,13 +86,13 @@ namespace produproperty
             tianjia(str);
         }
 
-        public void storage()
+        public async void storage()
         {
             if (writetext)
             {
                 return;
             }
-            _m.storage();
+            await _m.storage();
         }
 
         public async void dropimg(object sender, Windows.UI.Xaml.DragEventArgs e)
@@ -123,10 +123,27 @@ namespace produproperty
             {
                 _m.accessfolder(folder);
             }
+            addressfolder = string.Empty;
         }
 
-        public void file_open()
+        public async void file_open()
         {
+            FileOpenPicker pick = new FileOpenPicker();
+            //显示方式
+            pick.ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail;
+            //选择最先的位置
+            pick.SuggestedStartLocation =
+                Windows.Storage.Pickers.PickerLocationId.PicturesLibrary;
+            //后缀名
+            pick.FileTypeFilter.Add(".txt");
+            pick.FileTypeFilter.Add(".md");
+
+            StorageFile file = await pick.PickSingleFileAsync();
+
+            if (file != null)
+            {
+                _m.open_file(file);
+            }
 
         }
 

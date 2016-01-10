@@ -160,6 +160,27 @@ namespace produproperty
             return str;
         }
 
+        public async void open_file(StorageFile file)
+        {
+            _open = true;
+            await storage();
+            this.file = file;
+
+            using (IRandomAccessStream readStream = await file.OpenAsync(FileAccessMode.Read))
+            {
+                using (DataReader dataReader = new DataReader(readStream))
+                {
+                    UInt64 size = readStream.Size;
+                    if (size <= UInt32.MaxValue)
+                    {
+                        UInt32 numBytesLoaded = await dataReader.LoadAsync((UInt32)size);
+                        text = dataReader.ReadString(numBytesLoaded);
+                    }
+                }
+            }
+            name = file.DisplayName;
+        }
+
         public async Task<string> imgfolder(StorageFile file)
         {
             string str = "image";
@@ -193,6 +214,11 @@ namespace produproperty
 
         public async void accessfolder(StorageFolder folder)
         {
+            if (string.Equals(this.folder.Path, folder.Path))
+            {
+                return;
+            }
+
             this.folder = folder;
             writetext = false;
 
@@ -215,9 +241,11 @@ namespace produproperty
             {
                 image = await folder.CreateFolderAsync(str, CreationCollisionOption.OpenIfExists);
             }
+
+           await storage();
         }
 
-        public async void storage()
+        public async Task storage()
         {
             using (StorageStreamTransaction transaction = await file.OpenTransactedWriteAsync())
             {
@@ -236,10 +264,21 @@ namespace produproperty
             if (!_open)
             {
                 file = await file.CopyAsync(folder, name + ".md", NameCollisionOption.GenerateUniqueName);
+                try
+                {
+                    foreach (var t in await ApplicationData.Current.LocalFolder.GetFilesAsync())
+                    {
+                        System.IO.File.Delete(t.Path);
+                    }
+                }
+                catch
+                {
+                    
+                }
                 _open = true;
             }
 
-            reminder = reminder = "保存文件" + file.Path;
+            reminder = reminder = "保存文件" + file.Path+DateTime.Now.Hour.ToString()+DateTime.Now.Minute.ToString();
         }
 
        
@@ -263,7 +302,7 @@ namespace produproperty
             }
         }
 
-        private async void ce()
+        private async void ce()//2016年1月10日11:04:29
         {
             _open = false;
             string str;

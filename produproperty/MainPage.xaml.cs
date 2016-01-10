@@ -24,12 +24,9 @@ namespace produproperty
     {
         viewModel view;
         public MainPage()
-        {
-            view = new viewModel();
+        {            
             this.InitializeComponent();
-            view.selectchange = selectchange;
             text.Paste += Text_Paste;
-            this.DataContext = view;
         }
 
         private void Text_Paste(object sender, TextControlPasteEventArgs e)
@@ -89,13 +86,26 @@ namespace produproperty
 
         private void option(object sender, RoutedEventArgs e)
         {
+            view.storage();
             Frame frame = Window.Current.Content as Frame;
             frame.Navigate(typeof(option), view);
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            base.OnNavigatedTo(e);            
+            base.OnNavigatedTo(e);
+            if (e.Parameter is viewModel)
+            {
+                view = e.Parameter as viewModel;
+                DataContext = view;
+            }
+            else
+            {
+                view = new viewModel();
+                view.selectchange = selectchange;               
+                this.DataContext = view;
+            }
+
         }
     }
 }

@@ -14,7 +14,7 @@ namespace produproperty
         public model(viewModel view)
         {
             this.view = view;
-            
+
             ce();
         }
 
@@ -42,7 +42,7 @@ namespace produproperty
             }
         }
 
-     
+
 
         private string text
         {
@@ -219,7 +219,6 @@ namespace produproperty
                 return;
             }
 
-            this.folder = folder;
             writetext = false;
 
             Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList.Clear();
@@ -241,12 +240,20 @@ namespace produproperty
             {
                 image = await folder.CreateFolderAsync(str, CreationCollisionOption.OpenIfExists);
             }
-
-           await storage();
+            if (!this.folder.Path.Equals(ApplicationData.Current.LocalFolder.Path))
+            {
+                await storage();
+            }
+            this.folder = folder;
         }
 
         public async Task storage()
         {
+            if (string.IsNullOrEmpty(text))
+            {
+                return;
+            }
+
             using (StorageStreamTransaction transaction = await file.OpenTransactedWriteAsync())
             {
                 using (DataWriter dataWriter = new DataWriter(transaction.Stream))
@@ -273,15 +280,15 @@ namespace produproperty
                 }
                 catch
                 {
-                    
+
                 }
                 _open = true;
             }
 
-            reminder = reminder = "保存文件" + file.Path+DateTime.Now.Hour.ToString()+DateTime.Now.Minute.ToString();
+            reminder = reminder = "保存文件" + file.Path + " " + DateTime.Now.Hour.ToString() + ":" + DateTime.Now.Minute.ToString();
         }
 
-       
+
 
         public string _text;
         public string _name;
@@ -342,8 +349,8 @@ namespace produproperty
             str = "请输入标题";
             bool open = false;
             try
-            {                
-                file = ( await ApplicationData.Current.LocalFolder.GetFilesAsync()).First< StorageFile>();               
+            {
+                file = (await ApplicationData.Current.LocalFolder.GetFilesAsync()).First<StorageFile>();
                 open = true;
             }
             catch

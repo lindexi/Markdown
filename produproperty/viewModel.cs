@@ -156,13 +156,13 @@ namespace produproperty
             int i;
             for (i = 0; n > 0 && i < text.Length; i++)
             {
-                if (text[i] != '\r' && text[i] != '\n')
+                if (text[i] != '\r' )//&& text[i] != '\n')
                 {
                     n--;
                 }
             }
             text = text.Insert(i, str);
-            selectchange(select + str.Length + 1, 0);
+            selectchange(select + str.Length , 0);
 
             //string t = text.Replace("\r\n", "\n");
             //t = t.Insert(select, str);

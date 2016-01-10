@@ -145,7 +145,7 @@ namespace produproperty
                     encoder.SetPixelData(Windows.Graphics.Imaging.BitmapPixelFormat.Bgra8, Windows.Graphics.Imaging.BitmapAlphaMode.Straight, decoder.PixelWidth, decoder.PixelHeight, decoder.DpiX, decoder.DpiY, buffer);
                     await encoder.FlushAsync();
 
-                    str = $"![这里写图片描述](image/{file.Name})";
+                    str = $"![这里写图片描述](image/{file.Name})\r\n\r\n";
                 }
             }
 
@@ -179,6 +179,7 @@ namespace produproperty
                 }
             }
             name = file.DisplayName;
+            reminder = "打开" + file.Path;
         }
 
         public async Task<string> imgfolder(StorageFile file)
@@ -202,12 +203,12 @@ namespace produproperty
 
             if (file.FileType == ".png" || file.FileType == ".jpg")
             {
-                str = $"![这里写图片描述](image/{file.Name})";
+                str = $"![这里写图片描述](image/{file.Name})\r\n\r\n";
                 return str;
             }
             else
             {
-                str = $"[{file.Name}](image/{file.Name})";
+                str = $"[{file.Name}](image/{file.Name})\r\n\r\n";
                 return str;
             }
         }

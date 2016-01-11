@@ -56,6 +56,7 @@ namespace produproperty
 
         private void text_KeyDown(object sender, KeyRoutedEventArgs e)
         {
+            string str;
             if (e.Key.Equals(Windows.System.VirtualKey.Control))
             {
                 _ctrl = true;
@@ -71,9 +72,19 @@ namespace produproperty
                 {
 
                 }
+                else if (e.Key == Windows.System.VirtualKey.K)
+                {
+                    str = "\r\n```\r\n\r\n\r\n\r\n```\r\n";
+                    view.tianjia(str);
+                    text.SelectionStart -= 6;
+                }
+                else if (e.Key == Windows.System.VirtualKey.S)
+                {
+                    view.storage();
+                }
             }
 
-            e.Handled = true;
+            //e.Handled = true;
         }
 
         private void text_KeyUp(object sender, KeyRoutedEventArgs e)

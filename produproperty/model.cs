@@ -14,7 +14,7 @@ namespace produproperty
         public model(viewModel view)
         {
             this.view = view;
-
+            ran = new Random();
             ce();
         }
 
@@ -137,7 +137,7 @@ namespace produproperty
                 str = "image";
                 StorageFolder folder = await _folder.GetFolderAsync(str);
 
-                StorageFile file = await folder.CreateFileAsync(DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString() + DateTime.Now.Day.ToString() + DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString() + ".png", CreationCollisionOption.GenerateUniqueName);
+                StorageFile file = await folder.CreateFileAsync(DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString() + DateTime.Now.Day.ToString() + DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString() +(ran.Next()%10000).ToString()+ ".png", CreationCollisionOption.GenerateUniqueName);
 
                 using (var fileStream = await file.OpenAsync(FileAccessMode.ReadWrite))
                 {
@@ -309,7 +309,11 @@ namespace produproperty
                 return view.reminder;
             }
         }
-
+        private Random ran
+        {
+            set;
+            get;
+        }
         private async void ce()//2016年1月10日11:04:29
         {
             _open = false;
@@ -375,6 +379,12 @@ namespace produproperty
                         }
                     }
                 }
+            }
+            else
+            {
+                _text = @"
+拖入图片自动生成![](图片)，粘贴自动生成![](图片)
+按ctrl+k快速输入代码";
             }
             _name = file.DisplayName;
         }

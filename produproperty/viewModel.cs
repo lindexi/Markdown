@@ -16,6 +16,8 @@ namespace produproperty
         public viewModel()
         {
             _m = new model(this);
+            OnPropertyChanged("text");
+            OnPropertyChanged("name");
         }
 
         public string text
@@ -149,7 +151,7 @@ namespace produproperty
 
         private model _m;
 
-        private void tianjia(string str)
+        public void tianjia(string str)
         {
             int n;
             n = select;
@@ -162,6 +164,12 @@ namespace produproperty
                 }
             }
             text = text.Insert(i, str);
+            str = str.Replace("\r", "");
+            n = select + str.Length;
+            if (n > text.Length)
+            {
+                n = text.Length;
+            }
             selectchange(select + str.Length , 0);
 
             //string t = text.Replace("\r\n", "\n");

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.ApplicationModel;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;
 using Windows.Storage.Streams;
@@ -16,7 +17,11 @@ namespace produproperty
             this.view = view;
             ran = new Random();
             ce();
+
+            App.Current.Suspending += Current_Suspending;
+
         }
+
 
         public StorageFile file
         {
@@ -41,8 +46,6 @@ namespace produproperty
                 return _folder;
             }
         }
-
-
 
         private string text
         {
@@ -115,7 +118,6 @@ namespace produproperty
             if (con.Contains(StandardDataFormats.Text))
             {
                 str = await con.GetTextAsync();
-                //tianjiatext(str);
                 return str;
             }
 
@@ -137,7 +139,7 @@ namespace produproperty
                 str = "image";
                 StorageFolder folder = await _folder.GetFolderAsync(str);
 
-                StorageFile file = await folder.CreateFileAsync(DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString() + DateTime.Now.Day.ToString() + DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString() +(ran.Next()%10000).ToString()+ ".png", CreationCollisionOption.GenerateUniqueName);
+                StorageFile file = await folder.CreateFileAsync(DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString() + DateTime.Now.Day.ToString() + DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString() + (ran.Next() % 10000).ToString() + ".png", CreationCollisionOption.GenerateUniqueName);
 
                 using (var fileStream = await file.OpenAsync(FileAccessMode.ReadWrite))
                 {
@@ -145,7 +147,7 @@ namespace produproperty
                     encoder.SetPixelData(Windows.Graphics.Imaging.BitmapPixelFormat.Bgra8, Windows.Graphics.Imaging.BitmapAlphaMode.Straight, decoder.PixelWidth, decoder.PixelHeight, decoder.DpiX, decoder.DpiY, buffer);
                     await encoder.FlushAsync();
 
-                    str = $"![这里写图片描述](image/{file.Name})\r\n\r\n";
+                    str = $"![这里写图片描述](image/{file.Name})\n";
                 }
             }
 
@@ -158,6 +160,18 @@ namespace produproperty
             }
 
             return str;
+        }
+
+        public async void Current_Suspending(object sender, SuspendingEventArgs e)
+        {
+            //throw new NotImplementedException();
+            if (!string.IsNullOrEmpty(_text))
+            {
+                bool temp = _open;
+                _open = true;
+                await storage();
+                _open = temp;
+            }
         }
 
         public async void open_file(StorageFile file)
@@ -175,10 +189,29 @@ namespace produproperty
                     {
                         UInt32 numBytesLoaded = await dataReader.LoadAsync((UInt32)size);
                         text = dataReader.ReadString(numBytesLoaded);
+                        int i = text.IndexOf('\n');
+                        if (i > 0)
+                        {
+                            name = text.Substring(0, i);
+                            text = text.Substring(i + 2);
+                        }
+                        else
+                        {
+                            name = file.DisplayName;
+                        }
+                        i = text.LastIndexOf("http://blog.csdn.net/lindexi_gd");
+                        if (i > 0)
+                        {
+                            if (i - 2 > 0)
+                            {
+                                i = i - 2;
+                            }
+                            text = text.Substring(0, i);
+                        }
                     }
                 }
             }
-            name = file.DisplayName;
+            //name = file.DisplayName;
             reminder = "打开" + file.Path;
         }
 
@@ -241,10 +274,10 @@ namespace produproperty
             {
                 image = await folder.CreateFolderAsync(str, CreationCollisionOption.OpenIfExists);
             }
-            if (!this.folder.Path.Equals(ApplicationData.Current.LocalFolder.Path))
-            {
-                await storage();
-            }
+            //if (!this.folder.Path.Equals(folder.Path))
+            //{
+            await storage();
+            //}
             this.folder = folder;
         }
 
@@ -255,11 +288,28 @@ namespace produproperty
                 return;
             }
 
+            //string str = name + "\n" + text.Replace("\r\n", "\n");
+            string[] temp = text.Split(new char[] { '\r', '\n' });
+            StringBuilder str = new StringBuilder();
+            str.Append(name + "\n\n");
+            foreach (var t in temp)
+            {
+                if (!string.IsNullOrEmpty(t))
+                {
+                    str.Append(t + "\n\n");
+                }
+            }
+
+            if (!_open)
+            {
+                str.Append("http://blog.csdn.net/lindexi_gd");
+            }
+
             using (StorageStreamTransaction transaction = await file.OpenTransactedWriteAsync())
             {
                 using (DataWriter dataWriter = new DataWriter(transaction.Stream))
                 {
-                    dataWriter.WriteString(text);
+                    dataWriter.WriteString(str.ToString());
                     transaction.Stream.Size = await dataWriter.StoreAsync();
                     await transaction.CommitAsync();
                 }
@@ -274,10 +324,8 @@ namespace produproperty
                 file = await file.CopyAsync(folder, name + ".md", NameCollisionOption.GenerateUniqueName);
                 try
                 {
-                    foreach (var t in await ApplicationData.Current.LocalFolder.GetFilesAsync())
-                    {
-                        System.IO.File.Delete(t.Path);
-                    }
+                    StorageFolder folder = await ApplicationData.Current.LocalFolder.GetFolderAsync("text");
+                    System.IO.Directory.Delete(folder.Path);
                 }
                 catch
                 {
@@ -318,6 +366,16 @@ namespace produproperty
         {
             _open = false;
             string str;
+            StorageFolder temp = null;
+            try
+            {
+                str = "text";
+                temp = await ApplicationData.Current.LocalFolder.CreateFolderAsync(str, CreationCollisionOption.OpenIfExists);
+            }
+            catch
+            {
+
+            }
             //默认位置
             try
             {
@@ -326,7 +384,8 @@ namespace produproperty
             }
             catch
             {
-                folder = ApplicationData.Current.LocalFolder;
+                //str = "text";
+                folder = temp;//=await ApplicationData.Current.LocalFolder.CreateFolderAsync(str,CreationCollisionOption.OpenIfExists);
                 //没有默认位置
 
                 writetext = true;
@@ -355,13 +414,13 @@ namespace produproperty
             bool open = false;
             try
             {
-                file = (await ApplicationData.Current.LocalFolder.GetFilesAsync()).First<StorageFile>();
+                file = (await temp.GetFilesAsync()).First<StorageFile>();
                 open = true;
             }
             catch
             {
                 //新建
-                file = await ApplicationData.Current.LocalFolder.CreateFileAsync(str, CreationCollisionOption.GenerateUniqueName);
+                file = await temp.CreateFileAsync(str, CreationCollisionOption.GenerateUniqueName);
                 open = false;
             }
 
@@ -375,18 +434,24 @@ namespace produproperty
                         if (size <= UInt32.MaxValue)
                         {
                             UInt32 numBytesLoaded = await dataReader.LoadAsync((UInt32)size);
-                            _text = dataReader.ReadString(numBytesLoaded);
+                            text = dataReader.ReadString(numBytesLoaded);
+                            int i = text.IndexOf('\n');
+                            if (i > 0)
+                            {
+                                text = text.Substring(i + 1);
+                            }
                         }
+                        name = file.DisplayName;
                     }
                 }
             }
             else
             {
-                _text = @"
+                text = @"
 拖入图片自动生成![](图片)，粘贴自动生成![](图片)
 按ctrl+k快速输入代码";
             }
-            _name = file.DisplayName;
+            //_name = file.DisplayName;
         }
     }
 }

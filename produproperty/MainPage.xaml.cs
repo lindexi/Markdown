@@ -24,7 +24,7 @@ namespace produproperty
     {
         viewModel view;
         public MainPage()
-        {            
+        {
             this.InitializeComponent();
             text.Paste += Text_Paste;
         }
@@ -74,7 +74,7 @@ namespace produproperty
                 }
                 else if (e.Key == Windows.System.VirtualKey.K)
                 {
-                    str = "\r\n```\r\n\r\n\r\n\r\n```\r\n";
+                    str = "\n```C#\n\n\n\n```\n";
                     view.tianjia(str);
                     text.SelectionStart -= 6;
                 }
@@ -97,7 +97,7 @@ namespace produproperty
 
         private void option(object sender, RoutedEventArgs e)
         {
-            view.storage();
+            //view.storage();
             Frame frame = Window.Current.Content as Frame;
             frame.Navigate(typeof(option), view);
         }
@@ -113,7 +113,7 @@ namespace produproperty
             else
             {
                 view = new viewModel();
-                view.selectchange = selectchange;               
+                view.selectchange = selectchange;
                 this.DataContext = view;
             }
 

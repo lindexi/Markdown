@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.ApplicationModel;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -18,6 +19,16 @@ namespace produproperty
             _m = new model(this);
             OnPropertyChanged("text");
             OnPropertyChanged("name");
+
+            object temp;
+            if (ApplicationData.Current.LocalSettings.Values.TryGetValue("width", out temp))
+            {
+                width = temp as string;
+            }
+            else
+            {
+                width = "20";
+            }           
         }
 
         public string text
@@ -75,6 +86,29 @@ namespace produproperty
             }
         }
 
+        public string width
+        {
+            set
+            {
+                try
+                {
+                    int temp;
+                    temp = Convert.ToInt32(value);
+                    _width = temp;
+                    OnPropertyChanged();
+                    ApplicationData.Current.LocalSettings.Values["width"] = value;
+                }
+                catch
+                {
+
+                }
+            }
+            get
+            {
+                return _width.ToString();
+            }
+        }
+
         public async void clipboard(TextControlPasteEventArgs e)
         {
             if (writetext)
@@ -95,6 +129,8 @@ namespace produproperty
                 return;
             }
             await _m.storage();
+
+            //_m.Current_Suspending(this, new object() as SuspendingEventArgs);  
         }
 
         public async void dropimg(object sender, Windows.UI.Xaml.DragEventArgs e)
@@ -150,6 +186,7 @@ namespace produproperty
         }
 
         private model _m;
+        private int _width;
 
         public void tianjia(string str)
         {
@@ -158,7 +195,7 @@ namespace produproperty
             int i;
             for (i = 0; n > 0 && i < text.Length; i++)
             {
-                if (text[i] != '\r' )//&& text[i] != '\n')
+                if (text[i] != '\r')//&& text[i] != '\n')
                 {
                     n--;
                 }
@@ -170,7 +207,7 @@ namespace produproperty
             {
                 n = text.Length;
             }
-            selectchange(select + str.Length , 0);
+            selectchange(n, 0);
 
             //string t = text.Replace("\r\n", "\n");
             //t = t.Insert(select, str);

@@ -10,9 +10,9 @@ using Windows.Storage.Pickers;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml.Controls;
 
-namespace produproperty
+namespace produproperty.ViewModel
 {
-    class viewModel : ViewModel.notify_property
+    class viewModel : notify_property
     {
         public viewModel()
         {

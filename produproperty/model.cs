@@ -12,7 +12,7 @@ namespace produproperty
 {
     class model
     {
-        public model(viewModel view)
+        public model(ViewModel.viewModel view)
         {
             this.view = view;
             ran = new Random();
@@ -325,7 +325,7 @@ namespace produproperty
                 try
                 {
                     StorageFolder folder = await ApplicationData.Current.LocalFolder.GetFolderAsync("text");
-                    System.IO.Directory.Delete(folder.Path);
+                    System.IO.Directory.Delete(folder.Path,true);
                 }
                 catch
                 {
@@ -341,7 +341,7 @@ namespace produproperty
 
         public string _text;
         public string _name;
-        private viewModel view;
+        private ViewModel.viewModel view;
         private StorageFile _file;
         private StorageFolder _folder;
         private bool _open;

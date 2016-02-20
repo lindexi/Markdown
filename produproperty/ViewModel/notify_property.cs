@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Text;
 
-namespace ViewModel
+namespace produproperty.ViewModel
 {
     /// <summary>
     /// 提供继承通知UI改变值

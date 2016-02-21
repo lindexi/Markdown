@@ -1,25 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.Graphics.Imaging;
 using Windows.Storage;
-using Windows.Storage.Streams;
 
 namespace produproperty.ViewModel
 {
-
     /// <summary>
-    ///
     /// </summary>
     public class winmain : notify_property
     {
         public winmain(StorageFolder folder)
         {
-            ran=new Random();
+            ran = new Random();
             _folder = folder;
-            textStack=new Stack<string>();
+            textStack = new Stack<string>();
 
             select = 0;
             select_length = 0;
@@ -34,17 +31,33 @@ namespace produproperty.ViewModel
                 _text = value;
                 OnPropertyChanged();
             }
-            get
-            {
-                return _text;
-            }
+            get { return _text; }
         }
 
-        public Action<int, int> selectchange;
+        public string title
+        {
+            set
+            {
+                _title = value;
+                OnPropertyChanged();
+            }
+            get { return _title; }
+        }
 
         public int select;
 
         public int select_length;
+
+        public Action<int, int> selectchange;
+
+        private readonly StorageFolder _folder;
+        private readonly Random ran;
+        private readonly Stack<string> textStack;
+        private StorageFile _file;
+
+        private string _text;
+        private string _title;
+
 
         public void cancel_text()
         {
@@ -54,7 +67,7 @@ namespace produproperty.ViewModel
 
         public async Task<string> clipboard(DataPackageView con)
         {
-            string str = string.Empty;
+            var str = string.Empty;
             //文本
             if (con.Contains(StandardDataFormats.Text))
             {
@@ -65,18 +78,18 @@ namespace produproperty.ViewModel
             //图片
             if (con.Contains(StandardDataFormats.Bitmap))
             {
-                RandomAccessStreamReference img = await con.GetBitmapAsync();
+                var img = await con.GetBitmapAsync();
                 var imgstream = await img.OpenReadAsync();
-                Windows.Graphics.Imaging.BitmapDecoder decoder =
-                    await Windows.Graphics.Imaging.BitmapDecoder.CreateAsync(imgstream);
-                Windows.Graphics.Imaging.PixelDataProvider pxprd =
+                var decoder =
+                    await BitmapDecoder.CreateAsync(imgstream);
+                var pxprd =
                     await
-                        decoder.GetPixelDataAsync(Windows.Graphics.Imaging.BitmapPixelFormat.Bgra8,
-                            Windows.Graphics.Imaging.BitmapAlphaMode.Straight,
-                            new Windows.Graphics.Imaging.BitmapTransform(),
-                            Windows.Graphics.Imaging.ExifOrientationMode.RespectExifOrientation,
-                            Windows.Graphics.Imaging.ColorManagementMode.DoNotColorManage);
-                byte[] buffer = pxprd.DetachPixelData();
+                        decoder.GetPixelDataAsync(BitmapPixelFormat.Bgra8,
+                            BitmapAlphaMode.Straight,
+                            new BitmapTransform(),
+                            ExifOrientationMode.RespectExifOrientation,
+                            ColorManagementMode.DoNotColorManage);
+                var buffer = pxprd.DetachPixelData();
 
                 var file = await image_storage();
 
@@ -84,10 +97,10 @@ namespace produproperty.ViewModel
                 {
                     var encoder =
                         await
-                            Windows.Graphics.Imaging.BitmapEncoder.CreateAsync(
-                                Windows.Graphics.Imaging.BitmapEncoder.PngEncoderId, fileStream);
-                    encoder.SetPixelData(Windows.Graphics.Imaging.BitmapPixelFormat.Bgra8,
-                        Windows.Graphics.Imaging.BitmapAlphaMode.Straight, decoder.PixelWidth, decoder.PixelHeight,
+                            BitmapEncoder.CreateAsync(
+                                BitmapEncoder.PngEncoderId, fileStream);
+                    encoder.SetPixelData(BitmapPixelFormat.Bgra8,
+                        BitmapAlphaMode.Straight, decoder.PixelWidth, decoder.PixelHeight,
                         decoder.DpiX, decoder.DpiY, buffer);
                     await encoder.FlushAsync();
 
@@ -99,7 +112,7 @@ namespace produproperty.ViewModel
             if (con.Contains(StandardDataFormats.StorageItems))
             {
                 var filelist = await con.GetStorageItemsAsync();
-                StorageFile file = filelist.OfType<StorageFile>().First();
+                var file = filelist.OfType<StorageFile>().First();
                 return await imgfolder(file);
             }
 
@@ -117,40 +130,43 @@ namespace produproperty.ViewModel
             return "";
         }
 
-        private string[] spilt_text(string text,int select_index,int select_length)
+        private string[] spilt_text(string text, int select_index, int select_length)
         {
             if (select_index >= text.Length)
             {
-                return null;
+                return new[] {text, string.Empty, string.Empty};
             }
-            string str1 = text.Substring(0, select_index);
-            string str2 = text.Substring(select_index, select_length);
-            string str3 = text.Substring(select_index + select_length);
+            var str1 = text.Substring(0, select_index);
+            if (select_index + select_length >= text.Length)
+            {
+                return new[] {str1, text.Substring(select_index), string.Empty};
+            }
+            var str2 = text.Substring(select_index, select_length);
+            var str3 = text.Substring(select_index + select_length);
             return new[] {str1, str2, str3};
         }
 
         private async void file_storage()
         {
-            var file =await _folder.GetFilesAsync();
-
+            var file = await _folder.GetFilesAsync();
         }
-        
+
         private async Task<StorageFile> image_storage()
         {
-            StorageFolder folder = await _folder.CreateFolderAsync(_file.Name, CreationCollisionOption.OpenIfExists);
+            var folder = await _folder.CreateFolderAsync(_file.Name, CreationCollisionOption.OpenIfExists);
 
-            StorageFile file =
+            var file =
                 await
                     folder.CreateFileAsync(
-                        DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString() + DateTime.Now.Day.ToString() +
-                        DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString() +
-                        (ran.Next()%10000).ToString() + ".png", CreationCollisionOption.GenerateUniqueName);
+                        DateTime.Now.Year + DateTime.Now.Month.ToString() + DateTime.Now.Day +
+                        DateTime.Now.Hour + DateTime.Now.Minute +
+                        ran.Next()%10000 + ".png", CreationCollisionOption.GenerateUniqueName);
             return file;
         }
 
         private async Task<string> imgfolder(StorageFile file)
         {
-            string str = this._file.Name;
+            var str = _file.Name;
             StorageFolder image = null;
             try
             {
@@ -158,7 +174,6 @@ namespace produproperty.ViewModel
             }
             catch
             {
-
             }
             if (image == null)
             {
@@ -171,21 +186,8 @@ namespace produproperty.ViewModel
                 str = $"![这里写图片描述](image/{file.Name})\r\n\r\n";
                 return str;
             }
-            else
-            {
-                str = $"[{file.Name}](image/{file.Name})\r\n\r\n";
-                return str;
-            }
+            str = $"[{file.Name}](image/{file.Name})\r\n\r\n";
+            return str;
         }
-
-        private string _text;
-        private readonly Stack<string> textStack; 
-
-        private StorageFolder _folder;
-        private StorageFile _file;
-        private readonly Random ran;
     }
-
 }
-
-

@@ -38,7 +38,14 @@
                     <AppBarButton Content="分割"></AppBarButton>
                 </CommandBar>
             </AppBar>
-
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                
+                
+            </Grid>
         </Grid>
     </Grid>
 </Page>

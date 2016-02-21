@@ -20,6 +20,7 @@ namespace produproperty.ViewModel
 
             select = 0;
             select_length = 0;
+            title = "无标题";
             text = "";
         }
 
@@ -49,6 +50,20 @@ namespace produproperty.ViewModel
         public int select_length;
 
         public Action<int, int> selectchange;
+
+        public void bold_text()
+        {
+            if (select_length > 0)
+            {
+                var str = spilt_text(text, @select, select_length);
+                text = str[0] + "**" + str[1] + "**" + str[2];
+            }
+            else
+            {
+                text = text.Insert(@select, "****");
+                selectchange(@select + 2, 0);
+            }
+        }
 
         private readonly StorageFolder _folder;
         private readonly Random ran;
@@ -134,16 +149,16 @@ namespace produproperty.ViewModel
         {
             if (select_index >= text.Length)
             {
-                return new[] {text, string.Empty, string.Empty};
+                return new[] { text, string.Empty, string.Empty };
             }
             var str1 = text.Substring(0, select_index);
             if (select_index + select_length >= text.Length)
             {
-                return new[] {str1, text.Substring(select_index), string.Empty};
+                return new[] { str1, text.Substring(select_index), string.Empty };
             }
             var str2 = text.Substring(select_index, select_length);
             var str3 = text.Substring(select_index + select_length);
-            return new[] {str1, str2, str3};
+            return new[] { str1, str2, str3 };
         }
 
         private async void file_storage()
@@ -160,7 +175,7 @@ namespace produproperty.ViewModel
                     folder.CreateFileAsync(
                         DateTime.Now.Year + DateTime.Now.Month.ToString() + DateTime.Now.Day +
                         DateTime.Now.Hour + DateTime.Now.Minute +
-                        ran.Next()%10000 + ".png", CreationCollisionOption.GenerateUniqueName);
+                        ran.Next() % 10000 + ".png", CreationCollisionOption.GenerateUniqueName);
             return file;
         }
 

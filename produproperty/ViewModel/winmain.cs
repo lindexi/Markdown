@@ -20,6 +20,10 @@ namespace produproperty.ViewModel
             ran=new Random();
             _folder = folder;
             textStack=new Stack<string>();
+
+            select = 0;
+            select_length = 0;
+            text = "";
         }
 
         public string text
@@ -35,9 +39,12 @@ namespace produproperty.ViewModel
                 return _text;
             }
         }
+
         public Action<int, int> selectchange;
 
         public int select;
+
+        public int select_length;
 
         public void cancel_text()
         {
@@ -97,6 +104,12 @@ namespace produproperty.ViewModel
             }
 
             return str;
+        }
+
+        public void clipboard_substitution(string str)
+        {
+            var str_spilt = spilt_text(text, select, select_length);
+            text = str_spilt[0] + str + str_spilt[2];
         }
 
         private string text_line()

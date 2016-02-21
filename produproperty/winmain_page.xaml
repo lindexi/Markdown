@@ -8,6 +8,37 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition ></RowDefinition>
+            </Grid.RowDefinitions>
+            <AppBar Grid.Row="0">
+                <CommandBar>
+                    <AppBarButton Icon="add"></AppBarButton>
+                    <AppBarButton Icon="save"></AppBarButton>
+                    <AppBarButton Icon ="undo"></AppBarButton>
+                    <AppBarButton Content="粗体" Icon="Bold"/>
+                    <AppBarButton Content="斜体">
 
+                    </AppBarButton>
+                    <AppBarButton Content="标题"></AppBarButton>
+                    <AppBarButton Content="链接" Icon="Link"/>
+                    <AppBarButton Content="图片"></AppBarButton>
+                    <AppBarButton Content="引用"></AppBarButton>
+                    <AppBarButton Content="代码"></AppBarButton>
+                    <AppBarButton Content="列表"></AppBarButton>
+                    <AppBarButton Content="分割"></AppBarButton>
+                </CommandBar>
+            </AppBar>
+
+        </Grid>
     </Grid>
 </Page>

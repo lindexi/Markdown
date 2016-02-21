@@ -119,6 +119,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\note_storage.cs" />
     <Compile Include="ViewModel\viewModel.cs" />
+    <Compile Include="ViewModel\winmain.cs" />
     <Compile Include="winmain_page.xaml.cs">
       <DependentUpon>winmain_page.xaml</DependentUpon>
     </Compile>

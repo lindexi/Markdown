@@ -1,21 +1,23 @@
 ﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace produproperty.ViewModel
 {
     /// <summary>
-    /// 提供继承通知UI改变值
+    ///     提供继承通知UI改变值
     /// </summary>
     public class notify_property : INotifyPropertyChanged
     {
+        private readonly StringBuilder _reminder;
+
         public notify_property()
         {
             _reminder = new StringBuilder();
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
         /// <summary>
-        /// 一直添加value
+        ///     一直添加value
         /// </summary>
         public string reminder
         {
@@ -31,24 +33,25 @@ namespace produproperty.ViewModel
             }
         }
 
-        public void UpdateProper<T>(ref T properValue, T newValue, [System.Runtime.CompilerServices.CallerMemberName] string properName = "")
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void UpdateProper<T>(ref T properValue, T newValue, [CallerMemberName] string properName = "")
         {
-            if (object.Equals(properValue, newValue))
+            if (Equals(properValue, newValue))
                 return;
 
             properValue = newValue;
-            OnPropertyChanged(properName);
-        }
-        public void OnPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string name = "")
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null)
+            if (properName != null)
             {
-                handler(this, new PropertyChangedEventArgs(name));
+                OnPropertyChanged(name: properName);
             }
         }
 
 
-        private StringBuilder _reminder;
+        public void OnPropertyChanged([CallerMemberName] string name = "")
+        {
+            var handler = PropertyChanged;
+            handler?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
     }
 }

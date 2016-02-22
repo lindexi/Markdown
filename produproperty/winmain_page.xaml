@@ -52,7 +52,7 @@
                              TextWrapping="Wrap" />
                 </Grid>
             </Grid>
-            <TextBox Grid.Row="2" Text="{x:Bind view.reminder,Mode=OneWay}" />
+            <TextBlock Grid.Row="2" Text="{x:Bind view.reminder,Mode=OneWay}" />
         </Grid>
     </Grid>
 </Page>

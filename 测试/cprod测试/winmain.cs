@@ -12,7 +12,7 @@ namespace cprod测试
         [TestMethod]
         public void clipboard_substitution()
         {
-            var view =new produproperty.ViewModel.winmain(null);
+            var view = new produproperty.ViewModel.winmain(null);
             string text = "要替换文本";
             //把替换两个字替换为string
             view.text = text;
@@ -20,7 +20,7 @@ namespace cprod测试
             view.select_length = 2;
             view.clipboard_substitution("string");
 
-            Assert.AreEqual("要string文本",view.text);
+            Assert.AreEqual("要string文本", view.text);
 
             view.text = text;
             view.select = 1;
@@ -29,5 +29,21 @@ namespace cprod测试
             Assert.AreEqual("要string", view.text);
         }
 
+        [TestMethod]
+        public void text_line()
+        {
+            //var view = new produproperty.ViewModel.winmain(null);
+            //string text = "#readme";
+            //Assert.AreEqual(text, view.text_line(text, 0));
+            //string str = text;
+            //text += "\nline";
+            //Assert.AreEqual(str, view.text_line(text, 2));
+            //str = "line";
+            //int i;
+            //i = text.IndexOf('\n') + 1;
+            //Assert.AreEqual(str, view.text_line(text, i));
+            //Assert.AreEqual("", view.text_line(text, 100));
+
+        }
     }
 }

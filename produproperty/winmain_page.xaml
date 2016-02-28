@@ -23,7 +23,7 @@
             </Grid.RowDefinitions>
             <!--<AppBar Grid.Row="0" IsOpen="True">-->
             <CommandBar IsOpen="True" Grid.Row="0">
-                <AppBarButton Icon="add" />
+                <AppBarButton Icon="add" Click="{x:Bind view.new_file}"/>
                 <AppBarButton Icon="save" />
                 <AppBarButton Icon="undo" />
                 <AppBarButton Content="粗体" Icon="Bold" />
@@ -43,6 +43,15 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <ListView x:Name="list_view" SelectionChanged="motify_file">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding name}" />
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
                 <Grid Grid.Column="1" Margin="10,10,10,10">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -50,11 +59,12 @@
                     </Grid.RowDefinitions>
                     <TextBox Text="{x:Bind view.title,Mode=TwoWay}" Grid.Row="0" Margin="10,10,10,10" />
                     <TextBox x:Name="text" Text="{x:Bind view.text,Mode=TwoWay}" Grid.Row="1" AcceptsReturn="True"
-                             TextWrapping="Wrap" />
-                    <MediaElement x:Name="mediaelement" AutoPlay="True" Volume="1" />
+                           SelectionChanged="selectext"  TextWrapping="Wrap" />
+                    <MediaElement Grid.Row="0" x:Name="mediaelement" AutoPlay="True" Volume="1.0" />
                 </Grid>
             </Grid>
             <TextBlock Grid.Row="2" Text="{x:Bind view.reminder,Mode=OneWay}" />
         </Grid>
+        
     </Grid>
 </Page>

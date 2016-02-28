@@ -31,6 +31,11 @@ namespace produproperty.ViewModel
             {
                 width = "20";
             }
+
+            advertisement = @"
+作者：lindexi_gd
+邮箱：lindexi_gd@163.com
+博客地址：http://blog.csdn.net/lindexi_gd   在原博客看会有好的排版";
         }
 
         public string text

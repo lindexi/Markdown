@@ -19,7 +19,7 @@ namespace produproperty
         }
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            view = e.Parameter as viewModel;
+            view = e.Parameter as viewModel ?? new viewModel();
         }
 
         private void mainpage(object sender, Windows.UI.Xaml.RoutedEventArgs e)

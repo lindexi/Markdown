@@ -1,4 +1,9 @@
-﻿using System;
+﻿// lindexi
+// 19:24
+
+#region
+
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -7,6 +12,8 @@ using Windows.ApplicationModel.DataTransfer;
 using Windows.Graphics.Imaging;
 using Windows.Storage;
 using Windows.Storage.Streams;
+
+#endregion
 
 namespace produproperty.ViewModel
 {
@@ -41,7 +48,10 @@ namespace produproperty.ViewModel
                 _text = value;
                 OnPropertyChanged();
             }
-            get { return _text; }
+            get
+            {
+                return _text;
+            }
         }
 
         public string title
@@ -69,7 +79,10 @@ namespace produproperty.ViewModel
                     OnPropertyChanged();
                 }
             }
-            get { return _file; }
+            get
+            {
+                return _file;
+            }
         }
 
         public int select;
@@ -87,19 +100,19 @@ namespace produproperty.ViewModel
 
         private async void file_storage_colleciton()
         {
-            var str = "默认";
+            string str = "默认";
             if (_folder == null)
             {
-                var folder = ApplicationData.Current.LocalFolder;
+                StorageFolder folder = ApplicationData.Current.LocalFolder;
                 _folder =
                     await
                         folder.CreateFolderAsync(str, CreationCollisionOption.OpenIfExists);
             }
 
-            var filel = await _folder.GetFilesAsync();
-            var readme = false;
+            IReadOnlyList<StorageFile> filel = await _folder.GetFilesAsync();
+            bool readme = false;
 
-            foreach (var temp in filel.Where(temp => temp.FileType == ".md"))
+            foreach (StorageFile temp in filel.Where(temp => temp.FileType == ".md"))
             {
                 if (temp.Name == "README.md")
                 {
@@ -122,7 +135,7 @@ namespace produproperty.ViewModel
         {
             if (select_length > 0)
             {
-                var str = spilt_text(text, @select, select_length);
+                string[] str = spilt_text(text, @select, select_length);
                 text = str[0] + "**" + str[1] + "**" + str[2];
             }
             else
@@ -141,7 +154,7 @@ namespace produproperty.ViewModel
 
         public async Task<string> clipboard(DataPackageView con)
         {
-            var str = string.Empty;
+            string str = string.Empty;
             //文本
             if (con.Contains(StandardDataFormats.Text))
             {
@@ -152,24 +165,24 @@ namespace produproperty.ViewModel
             //图片
             if (con.Contains(StandardDataFormats.Bitmap))
             {
-                var img = await con.GetBitmapAsync();
-                var imgstream = await img.OpenReadAsync();
-                var decoder =
+                RandomAccessStreamReference img = await con.GetBitmapAsync();
+                IRandomAccessStreamWithContentType imgstream = await img.OpenReadAsync();
+                BitmapDecoder decoder =
                     await BitmapDecoder.CreateAsync(imgstream);
-                var pxprd =
+                PixelDataProvider pxprd =
                     await
                         decoder.GetPixelDataAsync(BitmapPixelFormat.Bgra8,
                             BitmapAlphaMode.Straight,
                             new BitmapTransform(),
                             ExifOrientationMode.RespectExifOrientation,
                             ColorManagementMode.DoNotColorManage);
-                var buffer = pxprd.DetachPixelData();
+                byte[] buffer = pxprd.DetachPixelData();
 
-                var file = await image_storage();
+                StorageFile file = await image_storage();
 
-                using (var fileStream = await file.OpenAsync(FileAccessMode.ReadWrite))
+                using (IRandomAccessStream fileStream = await file.OpenAsync(FileAccessMode.ReadWrite))
                 {
-                    var encoder =
+                    BitmapEncoder encoder =
                         await
                             BitmapEncoder.CreateAsync(
                                 BitmapEncoder.PngEncoderId, fileStream);
@@ -185,8 +198,8 @@ namespace produproperty.ViewModel
             //文件
             if (con.Contains(StandardDataFormats.StorageItems))
             {
-                var filelist = await con.GetStorageItemsAsync();
-                var file = filelist.OfType<StorageFile>().First();
+                IReadOnlyList<IStorageItem> filelist = await con.GetStorageItemsAsync();
+                StorageFile file = filelist.OfType<StorageFile>().First();
                 return await imgfolder(file);
             }
 
@@ -195,7 +208,7 @@ namespace produproperty.ViewModel
 
         public void clipboard_substitution(string str)
         {
-            var str_spilt = spilt_text(text, select, select_length);
+            string[] str_spilt = spilt_text(text, select, select_length);
             text = str_spilt[0] + str + str_spilt[2];
         }
 
@@ -205,8 +218,8 @@ namespace produproperty.ViewModel
             {
                 select = 0;
             }
-            var str = text.Split('\n');
-            foreach (var temp in str)
+            string[] str = text.Split('\n');
+            foreach (string temp in str)
             {
                 select -= temp.Length;
                 if (select <= 0)
@@ -219,9 +232,9 @@ namespace produproperty.ViewModel
 
         private async void file_serialization()
         {
-            using (var transaction = await file.OpenTransactedWriteAsync())
+            using (StorageStreamTransaction transaction = await file.OpenTransactedWriteAsync())
             {
-                using (var dataWriter = new DataWriter(transaction.Stream))
+                using (DataWriter dataWriter = new DataWriter(transaction.Stream))
                 {
                     dataWriter.WriteString(title + text);
                     transaction.Stream.Size = await dataWriter.StoreAsync();
@@ -246,18 +259,18 @@ namespace produproperty.ViewModel
         private async void file_deserialize()
         {
             title = file.Name;
-            using (var readStream = await file.OpenAsync(FileAccessMode.Read))
+            using (IRandomAccessStream readStream = await file.OpenAsync(FileAccessMode.Read))
             {
-                using (var dataReader = new DataReader(readStream))
+                using (DataReader dataReader = new DataReader(readStream))
                 {
-                    var size = readStream.Size;
+                    ulong size = readStream.Size;
                     if (size <= uint.MaxValue)
                     {
-                        var numBytesLoaded = await dataReader.LoadAsync((uint) size);
+                        uint numBytesLoaded = await dataReader.LoadAsync((uint) size);
                         text = dataReader.ReadString(numBytesLoaded);
                         if (text_line(text, 0) == "#" + title)
                         {
-                            var i = text.IndexOf('\n');
+                            int i = text.IndexOf('\n');
                             if (i > 0)
                             {
                                 text = text.Substring(i);
@@ -272,28 +285,37 @@ namespace produproperty.ViewModel
         {
             if (select_index >= text.Length)
             {
-                return new[] {text, string.Empty, string.Empty};
+                return new[]
+                {
+                    text, string.Empty, string.Empty
+                };
             }
-            var str1 = text.Substring(0, select_index);
+            string str1 = text.Substring(0, select_index);
             if (select_index + select_length >= text.Length)
             {
-                return new[] {str1, text.Substring(select_index), string.Empty};
+                return new[]
+                {
+                    str1, text.Substring(select_index), string.Empty
+                };
             }
-            var str2 = text.Substring(select_index, select_length);
-            var str3 = text.Substring(select_index + select_length);
-            return new[] {str1, str2, str3};
+            string str2 = text.Substring(select_index, select_length);
+            string str3 = text.Substring(select_index + select_length);
+            return new[]
+            {
+                str1, str2, str3
+            };
         }
 
         private async void file_storage()
         {
-            var file = await _folder.GetFilesAsync();
+            IReadOnlyList<StorageFile> file = await _folder.GetFilesAsync();
         }
 
         private async Task<StorageFile> image_storage()
         {
-            var folder = await _folder.CreateFolderAsync(_file.Name, CreationCollisionOption.OpenIfExists);
+            StorageFolder folder = await _folder.CreateFolderAsync(_file.Name, CreationCollisionOption.OpenIfExists);
 
-            var file =
+            StorageFile file =
                 await
                     folder.CreateFileAsync(
                         DateTime.Now.Year + DateTime.Now.Month.ToString() + DateTime.Now.Day +
@@ -304,7 +326,7 @@ namespace produproperty.ViewModel
 
         private async Task<string> imgfolder(StorageFile file)
         {
-            var str = _file.Name;
+            string str = _file.Name;
             StorageFolder image = null;
             try
             {

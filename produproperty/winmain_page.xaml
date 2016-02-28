@@ -35,6 +35,7 @@
                 <AppBarButton Content="代码" />
                 <AppBarButton Content="列表" />
                 <AppBarButton Content="分割" />
+                <AppBarButton Icon="Volume" Content="" Click="talk" />
             </CommandBar>
             <!--</AppBar>-->
             <Grid Grid.Row="1">
@@ -50,6 +51,7 @@
                     <TextBox Text="{x:Bind view.title,Mode=TwoWay}" Grid.Row="0" Margin="10,10,10,10" />
                     <TextBox x:Name="text" Text="{x:Bind view.text,Mode=TwoWay}" Grid.Row="1" AcceptsReturn="True"
                              TextWrapping="Wrap" />
+                    <MediaElement x:Name="mediaelement" AutoPlay="True" Volume="1" />
                 </Grid>
             </Grid>
             <TextBlock Grid.Row="2" Text="{x:Bind view.reminder,Mode=OneWay}" />

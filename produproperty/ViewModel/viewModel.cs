@@ -1,18 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.ApplicationModel;
+﻿// lindexi
+// 9:05
+
+#region
+
+using System;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;
 using Windows.Storage.Pickers;
-using Windows.Storage.Streams;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+
+#endregion
 
 namespace produproperty.ViewModel
 {
-    class viewModel : notify_property
+    internal class viewModel : notify_property
     {
         public viewModel()
         {
@@ -28,7 +30,7 @@ namespace produproperty.ViewModel
             else
             {
                 width = "20";
-            }           
+            }
         }
 
         public string text
@@ -70,10 +72,6 @@ namespace produproperty.ViewModel
             }
         }
 
-        public Action<int, int> selectchange;
-
-        public int select;
-
         public string addressfolder
         {
             set
@@ -100,7 +98,6 @@ namespace produproperty.ViewModel
                 }
                 catch
                 {
-
                 }
             }
             get
@@ -108,6 +105,40 @@ namespace produproperty.ViewModel
                 return _width.ToString();
             }
         }
+
+        public string advertisement
+        {
+            set
+            {
+                _advertisement = value;
+                OnPropertyChanged();
+                ApplicationData.Current.LocalSettings.Values["advertisement"] = value;
+            }
+            get
+            {
+                if (string.IsNullOrEmpty(_advertisement))
+                {
+                    object temp;
+                    if (ApplicationData.Current.LocalSettings.Values.TryGetValue("advertisement", out temp))
+                    {
+                        advertisement = temp as string;
+                    }
+                    else
+                    {
+                        advertisement = " ";
+                    }
+                }
+                return _advertisement;
+            }
+        }
+
+        public int select;
+
+        public Action<int, int> selectchange;
+        private string _advertisement;
+
+        private model _m;
+        private int _width;
 
         public async void clipboard(TextControlPasteEventArgs e)
         {
@@ -117,7 +148,7 @@ namespace produproperty.ViewModel
             }
 
             e.Handled = true;
-            DataPackageView con = Windows.ApplicationModel.DataTransfer.Clipboard.GetContent();
+            DataPackageView con = Clipboard.GetContent();
             string str = await _m.clipboard(con);
             tianjia(str);
         }
@@ -133,13 +164,13 @@ namespace produproperty.ViewModel
             //_m.Current_Suspending(this, new object() as SuspendingEventArgs);  
         }
 
-        public async void dropimg(object sender, Windows.UI.Xaml.DragEventArgs e)
+        public async void dropimg(object sender, DragEventArgs e)
         {
             if (writetext)
             {
                 return;
             }
-            var defer = e.GetDeferral();
+            DragOperationDeferral defer = e.GetDeferral();
             try
             {
                 DataPackageView dataView = e.DataView;
@@ -168,10 +199,10 @@ namespace produproperty.ViewModel
         {
             FileOpenPicker pick = new FileOpenPicker();
             //显示方式
-            pick.ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail;
+            pick.ViewMode = PickerViewMode.Thumbnail;
             //选择最先的位置
             pick.SuggestedStartLocation =
-                Windows.Storage.Pickers.PickerLocationId.PicturesLibrary;
+                PickerLocationId.PicturesLibrary;
             //后缀名
             pick.FileTypeFilter.Add(".txt");
             pick.FileTypeFilter.Add(".md");
@@ -182,11 +213,7 @@ namespace produproperty.ViewModel
             {
                 _m.open_file(file);
             }
-
         }
-
-        private model _m;
-        private int _width;
 
         public void tianjia(string str)
         {
@@ -195,7 +222,7 @@ namespace produproperty.ViewModel
             int i;
             for (i = 0; n > 0 && i < text.Length; i++)
             {
-                if (text[i] != '\r')//&& text[i] != '\n')
+                if (text[i] != '\r') //&& text[i] != '\n')
                 {
                     n--;
                 }
@@ -213,6 +240,5 @@ namespace produproperty.ViewModel
             //t = t.Insert(select, str);
             //text = t.Replace("\n", "\r\n");
         }
-
     }
 }

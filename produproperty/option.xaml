@@ -23,6 +23,7 @@
                 <TextBlock Text="字体大小"/>
                 <TextBox Text="{x:Bind view.width,Mode=TwoWay}" Margin="10,10,10,10"/>
             </StackPanel>
+            <TextBox Header="广告" ></TextBox>
         </StackPanel>
     </Grid>
 </Page>

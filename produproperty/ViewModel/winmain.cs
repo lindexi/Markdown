@@ -64,7 +64,8 @@ namespace produproperty.ViewModel
             set
             {
                 _title = value;
-                motify_file();
+                //motify_file();
+                _file_storage?.motify(_title);
                 OnPropertyChanged();
             }
             get
@@ -140,13 +141,17 @@ namespace produproperty.ViewModel
             {
                 if (temp.Name == "README.md")
                 {
-                    if (file == null)
+                    //if (file == null)
+                    //{
+                    //    file = temp;
+                    //}
+                    if (_file_storage == null)
                     {
-                        file = temp;
+                        _file_storage = new file_storage(file,_folder);
                     }
                     readme = true;
                 }
-                file_observable_collection.Add(new file_storage(temp));
+                file_observable_collection.Add(new file_storage(temp,_folder));
             }
 
             if (!readme)
@@ -231,10 +236,12 @@ namespace produproperty.ViewModel
             //}
 
             file_serialization();
-            file = null;
+            _file_storage = new file_storage(null,_folder);
             title = "请输入标题";
             text = "";
             textStack.Clear();
+
+            
         }
 
         public void cancel_text()
@@ -347,21 +354,21 @@ namespace produproperty.ViewModel
             }
         }
 
-        private async void motify_file()
-        {
-            if (file == null && !string.IsNullOrEmpty(title))
-            {
-                file = await _folder.CreateFileAsync(title, CreationCollisionOption.GenerateUniqueName);
-                title = file.Name;
-                file_storage_colleciton();
-            }
-            if (title != file?.Name)
-            {
-                await _file.RenameAsync(title, NameCollisionOption.GenerateUniqueName);
-                title = file?.Name;
-                file_storage_colleciton();
-            }
-        }
+        //private async void motify_file()
+        //{
+        //    if (file == null && !string.IsNullOrEmpty(title))
+        //    {
+        //        file = await _folder.CreateFileAsync(title, CreationCollisionOption.GenerateUniqueName);
+        //        title = file.Name;
+        //        file_storage_colleciton();
+        //    }
+        //    if (title != file?.Name)
+        //    {
+        //        await _file.RenameAsync(title, NameCollisionOption.GenerateUniqueName);
+        //        title = file?.Name;
+        //        file_storage_colleciton();
+        //    }
+        //}
 
         private async void file_deserialize()
         {
@@ -373,7 +380,7 @@ namespace produproperty.ViewModel
                     ulong size = read_stream.Size;
                     if (size <= uint.MaxValue)
                     {
-                        text = data_reader.ReadString(await data_reader.LoadAsync((uint) size));
+                        text = data_reader.ReadString(await data_reader.LoadAsync((uint)size));
                         text = text.Replace("\r", "");
                         text = text.Replace("\n\n", "\n");
                         if (text_line(text, 0) == "#" + title)
@@ -428,7 +435,7 @@ namespace produproperty.ViewModel
                     folder.CreateFileAsync(
                         DateTime.Now.Year + DateTime.Now.Month.ToString() + DateTime.Now.Day +
                         DateTime.Now.Hour + DateTime.Now.Minute +
-                        ran.Next()%10000 + ".png", CreationCollisionOption.GenerateUniqueName);
+                        ran.Next() % 10000 + ".png", CreationCollisionOption.GenerateUniqueName);
             return file;
         }
 
@@ -457,16 +464,32 @@ namespace produproperty.ViewModel
             str = $"[{file.Name}](image/{file.Name})\n\n";
             return str;
         }
+
+        private file_storage _file_storage;
     }
 
     public class file_storage
     {
-        public file_storage(StorageFile file)
+        //public file_storage(StorageFile file)
+        //{
+        //    if (file != null)
+        //    {
+        //        this.file = file;
+        //        name = file.Name;
+        //    }
+        //}
+
+        public file_storage(StorageFile file, StorageFolder folder)
         {
             if (file != null)
             {
                 this.file = file;
                 name = file.Name;
+                storage(folder);
+            }
+            else
+            {
+                storage(folder);
             }
         }
 
@@ -480,6 +503,48 @@ namespace produproperty.ViewModel
         {
             set;
             get;
+        }
+
+        public StorageFolder folder
+        {
+            set;
+            get;
+        }
+
+        private async void storage(StorageFolder folder)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                string str = "请输入标题";
+                file = await folder.CreateFileAsync(str, CreationCollisionOption.GenerateUniqueName);
+                name = file.Name;
+                this.folder = await folder.CreateFolderAsync(name, CreationCollisionOption.OpenIfExists);
+            }
+            else
+            {
+                if (name == "README.md")
+                {
+                    this.folder = await folder.CreateFolderAsync("image", CreationCollisionOption.OpenIfExists);
+                }
+                else
+                {
+                    this.folder = await folder.CreateFolderAsync(name, CreationCollisionOption.OpenIfExists);
+                }
+            }
+        }
+
+        public async void motify(string str)
+        {
+            if (!str.EndsWith(".md"))
+            {
+                str += ".md";
+            }
+            if (str != name)
+            {
+                await file.RenameAsync(str, NameCollisionOption.GenerateUniqueName);
+                await folder.RenameAsync(str, NameCollisionOption.GenerateUniqueName);
+                name = file.Name;
+            }
         }
     }
 }

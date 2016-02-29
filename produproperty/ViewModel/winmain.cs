@@ -1,5 +1,5 @@
 ﻿// lindexi
-// 21:10
+// 19:34
 
 #region
 
@@ -12,6 +12,7 @@ using Windows.ApplicationModel.DataTransfer;
 using Windows.Graphics.Imaging;
 using Windows.Storage;
 using Windows.Storage.Streams;
+using Windows.UI.Xaml;
 
 #endregion
 
@@ -191,6 +192,33 @@ namespace produproperty.ViewModel
             file_deserialize();
         }
 
+        public async void dropimg(object sender, DragEventArgs e)
+        {
+            DragOperationDeferral defer = e.GetDeferral();
+            try
+            {
+                DataPackageView data_view = e.DataView;
+                string str = await clipboard(data_view);
+                clipboard_substitution(str);
+            }
+            finally
+            {
+                defer.Complete();
+            }
+        }
+
+        //private void tianjia(string str)
+        //{
+        //    string[] spilt = spilt_text();
+        //    text = spilt[0] + str + spilt[2];
+
+        //}
+
+        private string[] spilt_text()
+        {
+            return spilt_text(text, @select, select_length);
+        }
+
         public void new_file()
         {
             //FileSavePicker picker=new FileSavePicker();
@@ -215,7 +243,7 @@ namespace produproperty.ViewModel
             OnPropertyChanged("text");
         }
 
-        public async Task<string> clipboard(DataPackageView con)
+        private async Task<string> clipboard(DataPackageView con)
         {
             string str = string.Empty;
             //文本
@@ -269,10 +297,11 @@ namespace produproperty.ViewModel
             return str;
         }
 
-        public void clipboard_substitution(string str)
+        private void clipboard_substitution(string str)
         {
             string[] str_spilt = spilt_text(text, select, select_length);
-            text = str_spilt[0] + str + str_spilt[2];
+            text = str_spilt[0] + str.Replace("\r", "") + str_spilt[2];
+            selectchange(str_spilt[0].Length + str.Length, 0);
         }
 
         private string text_line(string text, int select)
@@ -332,7 +361,6 @@ namespace produproperty.ViewModel
                 title = file?.Name;
                 file_storage_colleciton();
             }
-
         }
 
         private async void file_deserialize()
@@ -345,7 +373,7 @@ namespace produproperty.ViewModel
                     ulong size = read_stream.Size;
                     if (size <= uint.MaxValue)
                     {
-                        text = data_reader.ReadString(await data_reader.LoadAsync((uint)size));
+                        text = data_reader.ReadString(await data_reader.LoadAsync((uint) size));
                         text = text.Replace("\r", "");
                         text = text.Replace("\n\n", "\n");
                         if (text_line(text, 0) == "#" + title)
@@ -400,7 +428,7 @@ namespace produproperty.ViewModel
                     folder.CreateFileAsync(
                         DateTime.Now.Year + DateTime.Now.Month.ToString() + DateTime.Now.Day +
                         DateTime.Now.Hour + DateTime.Now.Minute +
-                        ran.Next() % 10000 + ".png", CreationCollisionOption.GenerateUniqueName);
+                        ran.Next()%10000 + ".png", CreationCollisionOption.GenerateUniqueName);
             return file;
         }
 

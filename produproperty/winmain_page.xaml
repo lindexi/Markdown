@@ -12,7 +12,7 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <Grid Grid.Column="1">
+        <Grid Grid.Column="1" Drop="{x:Bind view.dropimg}" DragOver="Grid_DragOver">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
@@ -21,12 +21,11 @@
                 <RowDefinition />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <!--<AppBar Grid.Row="0" IsOpen="True">-->
             <CommandBar IsOpen="True" Grid.Row="0">
                 <AppBarButton Icon="add" Click="{x:Bind view.new_file}"/>
                 <AppBarButton Icon="save" />
-                <AppBarButton Icon="undo" />
-                <AppBarButton Content="粗体" Icon="Bold" />
+                <AppBarButton Icon="undo" Click="{x:Bind view.cancel_text}"/>
+                <AppBarButton Content="粗体" Icon="Bold" Click="{x:Bind view.bold_text}"/>
                 <AppBarButton Content="斜体" />
                 <AppBarButton Content="标题" />
                 <AppBarButton Content="链接" Icon="Link" />

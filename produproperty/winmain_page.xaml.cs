@@ -29,13 +29,6 @@ namespace produproperty
             list_view.ItemsSource = view.file_observable_collection;
         }
 
-        //private void select(int index, int length)
-        //{
-        //    text.SelectionStart = index;
-        //    text.SelectionLength = length;
-
-        //}
-
         private async void talk(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrEmpty(text.Text))
@@ -54,13 +47,6 @@ namespace produproperty
             mediaelement.SetSource(stream, stream.ContentType);
             mediaelement.Play();
             button.IsEnabled = true;
-
-            //Frame frame = Window.Current.Content as Frame;
-            //Panel grid = frame.Content as Panel;
-            //foreach (var temp in grid.Children)
-            //{
-
-            //}
         }
 
         private void selectext(object sender, RoutedEventArgs e)
@@ -71,7 +57,7 @@ namespace produproperty
 
         private void motify_file(object sender, SelectionChangedEventArgs e)
         {
-            var file = list_view.SelectedItem as file_storage;
+            file_storage file = list_view.SelectedItem as file_storage;
             if (file != null)
             {
                 view.open_file(file.file);
@@ -79,5 +65,14 @@ namespace produproperty
         }
 
 
+        private void Grid_DragOver(object sender, DragEventArgs e)
+        {
+            e.AcceptedOperation = Windows.ApplicationModel.DataTransfer.DataPackageOperation.Copy;
+            if (e.DragUIOverride != null)
+            {
+                e.DragUIOverride.Caption = "打开";
+            }
+            e.Handled = true;
+        }
     }
 }

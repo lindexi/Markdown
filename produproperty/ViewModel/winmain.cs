@@ -219,6 +219,12 @@ namespace produproperty.ViewModel
             selectchange(@select + 2, 0);
         }
 
+        public void mt()
+        {
+            text = text.Insert(@select, "\n\n```\n\n\n```\n");
+            selectchange(@select + 5, 0);
+        }
+
         public async void open_file(file_storage temp)
         {
             file_serialization(file.file, text);
@@ -229,6 +235,10 @@ namespace produproperty.ViewModel
                 text = await file_deserialize(file.file);
             }
             catch (UnauthorizedAccessException e)
+            {
+                text += e.Message;
+            }
+            catch (Exception e)
             {
                 text += e.Message;
             }
@@ -385,7 +395,7 @@ namespace produproperty.ViewModel
             selectchange(str_spilt[0].Length + str.Length, 0);
         }
 
-        private string text_line(string text, int select)
+        public string text_line(string text, int select)
         {
             if (select < 0)
             {

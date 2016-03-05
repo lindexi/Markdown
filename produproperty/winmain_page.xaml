@@ -57,7 +57,7 @@
                         <RowDefinition />
                     </Grid.RowDefinitions>
                     <TextBox Text="{x:Bind view.title,Mode=TwoWay}" Grid.Row="0" Margin="10,10,10,10" />
-                    <TextBox x:Name="text" Text="{x:Bind view.text,Mode=TwoWay}" Grid.Row="1" AcceptsReturn="True" KeyDown="keydown" KeyUp="keyup" LostFocus="{x:Bind view.storage}"
+                    <TextBox x:Name="text" Text="{x:Bind view.text,Mode=TwoWay}" Grid.Row="1" AcceptsReturn="True" KeyDown="keydown" KeyUp="keyup" LostFocus="{x:Bind view.storage}" TextChanged="textstorage"
                            SelectionChanged="selectext"  TextWrapping="Wrap" />
                     <MediaElement Grid.Row="0" x:Name="mediaelement" AutoPlay="True" Volume="1.0" />
                 </Grid>

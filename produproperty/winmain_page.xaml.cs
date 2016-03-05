@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Media.SpeechSynthesis;
 using Windows.Storage;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -19,6 +20,7 @@ namespace produproperty
         public winmain_page()
         {
             InitializeComponent();
+            _ctrl = false;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -54,6 +56,20 @@ namespace produproperty
         {
             view.@select = text.SelectionStart;
             view.select_length = text.SelectionLength;
+
+            //view.reminder = view.text_line(view.text, text.SelectionStart);
+            //try
+            //{
+            //    view.reminder = view.text[text.SelectionStart].ToString();
+            //    if (view.text[text.SelectionStart] == '\n')
+            //    {
+            //        view.reminder = "\\n";
+            //    }
+            //}
+            //catch
+            //{
+                
+            //}
         }
 
         private void motify_file(object sender, SelectionChangedEventArgs e)
@@ -78,17 +94,51 @@ namespace produproperty
 
         private void keydown(object sender, KeyRoutedEventArgs e)
         {
-            
+            if (e.Key == VirtualKey.Control)
+            {
+                _ctrl = true;
+            }
+            if (_ctrl)
+            {
+                switch (e.Key)
+                {
+                    case VirtualKey.S:view.storage();
+                        break;
+                    case VirtualKey.B:
+                        view.bold_text();
+                        break;
+                    case VirtualKey.K:
+                        view.mt();
+                        break;
+
+                    case VirtualKey.Q:
+                       
+                        break;
+                }
+            }
         }
 
         private void keyup(object sender, KeyRoutedEventArgs e)
         {
-            
+            if (e.Key == VirtualKey.Control)
+            {
+                _ctrl = false;
+            }
+
         }
 
-        private void storage(object sender, RoutedEventArgs e)
-        {
+        //private void storage(object sender, RoutedEventArgs e)
+        //{
             
+        //}
+        private bool _ctrl;
+
+        private void textstorage(object sender, TextChangedEventArgs e)
+        {
+            if (view.text != text.Text.Replace("\r", ""))
+            {
+                view.text = text.Text.Replace("\r", "");
+            }
         }
     }
 }

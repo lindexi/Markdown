@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Graphics.Imaging;
@@ -138,8 +139,11 @@ namespace produproperty.ViewModel
 
         private void motify()
         {
-            file?.motify(_title);
-            toc(_file_storage, _folder);
+            if (title != file.name)
+            {
+                file?.motify(title);
+                toc(_file_storage, _folder);
+            }
         }
 
         private async void file_storage_colleciton(StorageFolder folder)
@@ -217,9 +221,17 @@ namespace produproperty.ViewModel
 
         public async void open_file(file_storage temp)
         {
-            file_serialization(file.file, "#" + file.name + "\n\n" + text);
+            file_serialization(file.file, text);
             file = temp;
-            text = await file_deserialize(file.file);
+            title = file.name;
+            try
+            {
+                text = await file_deserialize(file.file);
+            }
+            catch (UnauthorizedAccessException e)
+            {
+                text += e.Message;
+            }
             //file_serialization();
             //this.file = file;
             //file_deserialize();
@@ -254,29 +266,42 @@ namespace produproperty.ViewModel
 
         private async void toc(file_storage _file_storage, StorageFolder folder)
         {
-            StringBuilder str = new StringBuilder();
-            foreach (file_storage temp in file_observable_collection)
+            try
             {
-                //* [语言无关](#语言无关)
-                str.Append($"* [{temp.name}]({temp.name})");
+                StringBuilder str = new StringBuilder();
+                foreach (file_storage temp in file_observable_collection)
+                {
+                    //* [语言无关](#语言无关)
+                    str.Append($"- [{temp.name}]({temp.name})" + "\n");
+                }
+                str.Append("\n");
+                string string_temp = await file_deserialize(_file_storage.file);
+                int n = string_temp.IndexOf("\n\n");
+                if (n > 0)
+                {
+                    file_serialization(_file_storage.file, str.ToString() + "\n\n" + string_temp.Substring(n));
+                }
+                else
+                {
+                    file_serialization(_file_storage.file, str.ToString() + "\n\n" + string_temp);
+                }
             }
-
-            string string_temp = await file_deserialize(_file_storage.file);
-
-            int n = string_temp.IndexOf("\n\n");
-            if (n > 0)
+            catch
             {
-                file_serialization(_file_storage.file, str.ToString() + "\n\n" + string_temp.Substring(n));
+                await Task.Delay(100);
+                toc(_file_storage, folder);
             }
         }
 
         public void new_file()
         {
-            file_serialization(file.file, "#" + title + "\n\n" + text);
-            _file_storage = new file_storage(null, _folder);
+            file_serialization(file.file, text);
+            file = new file_storage(null, _folder);
             title = "请输入标题";
             text = "";
             textStack.Clear();
+            file_observable_collection.Add(file);
+            toc(_file_storage, _folder);
         }
 
         public void cancel_text()
@@ -369,12 +394,18 @@ namespace produproperty.ViewModel
         private async void file_serialization(StorageFile temp, string str)
         {
             int n;
+            if (temp.Name != "README.md")
+            {
+                str = "#" + title + "\n\n" + str;
+            }
+
             n = str.IndexOf(advertisement);
             if (n < 0)
             {
                 str += advertisement;
             }
 
+            //title
             //str = "#" + title + "\n" + str;
             str = str.Replace("\n", "\n\n");
             str = str.Replace("\n\n\n\n", "\n\n");
@@ -422,7 +453,7 @@ namespace produproperty.ViewModel
                     ulong size = read_stream.Size;
                     if (size <= uint.MaxValue)
                     {
-                        str = data_reader.ReadString(await data_reader.LoadAsync((uint) size));
+                        str = data_reader.ReadString(await data_reader.LoadAsync((uint)size));
                         str = str.Replace("\r", "");
                         str = str.Replace("\n\n", "\n");
                         if (text_line(str, 0) == "#" + title)
@@ -479,7 +510,7 @@ namespace produproperty.ViewModel
                     folder.CreateFileAsync(
                         DateTime.Now.Year + DateTime.Now.Month.ToString() + DateTime.Now.Day +
                         DateTime.Now.Hour + DateTime.Now.Minute +
-                        ran.Next()%10000 + ".png", CreationCollisionOption.GenerateUniqueName);
+                        ran.Next() % 10000 + ".png", CreationCollisionOption.GenerateUniqueName);
             return file;
         }
 
@@ -528,12 +559,10 @@ namespace produproperty.ViewModel
             {
                 this.file = file;
                 name = file.Name;
-                _b = storage(folder);
             }
-            else
-            {
-                _b = storage(folder);
-            }
+
+            _b = storage(folder);
+
         }
 
         public string name
@@ -552,7 +581,7 @@ namespace produproperty.ViewModel
             }
             get
             {
-                return file.Name;
+                return file?.Name ?? "";
             }
         }
 
@@ -638,6 +667,7 @@ namespace produproperty.ViewModel
                 await folder.RenameAsync(str, NameCollisionOption.GenerateUniqueName);
                 OnPropertyChanged("name");
             }
+
         }
     }
 }

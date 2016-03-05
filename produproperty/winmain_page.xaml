@@ -23,7 +23,7 @@
             </Grid.RowDefinitions>
             <CommandBar IsOpen="True" Grid.Row="0">
                 <AppBarButton Icon="add" Click="{x:Bind view.new_file}"/>
-                <AppBarButton Icon="save" />
+                <AppBarButton Icon="save" Click="{x:Bind view.storage}"/>
                 <AppBarButton Icon="undo" Click="{x:Bind view.cancel_text}"/>
                 <AppBarButton Content="粗体" Icon="Bold" Click="{x:Bind view.bold_text}"/>
                 <AppBarButton Content="斜体" />
@@ -57,7 +57,7 @@
                         <RowDefinition />
                     </Grid.RowDefinitions>
                     <TextBox Text="{x:Bind view.title,Mode=TwoWay}" Grid.Row="0" Margin="10,10,10,10" />
-                    <TextBox x:Name="text" Text="{x:Bind view.text,Mode=TwoWay}" Grid.Row="1" AcceptsReturn="True"
+                    <TextBox x:Name="text" Text="{x:Bind view.text,Mode=TwoWay}" Grid.Row="1" AcceptsReturn="True" KeyDown="keydown" KeyUp="keyup" LostFocus="{x:Bind view.storage}"
                            SelectionChanged="selectext"  TextWrapping="Wrap" />
                     <MediaElement Grid.Row="0" x:Name="mediaelement" AutoPlay="True" Volume="1.0" />
                 </Grid>

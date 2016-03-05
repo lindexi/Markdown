@@ -8,6 +8,7 @@ using Windows.Media.SpeechSynthesis;
 using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 using produproperty.ViewModel;
 namespace produproperty
@@ -73,6 +74,21 @@ namespace produproperty
                 e.DragUIOverride.Caption = "打开";
             }
             e.Handled = true;
+        }
+
+        private void keydown(object sender, KeyRoutedEventArgs e)
+        {
+            
+        }
+
+        private void keyup(object sender, KeyRoutedEventArgs e)
+        {
+            
+        }
+
+        private void storage(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }

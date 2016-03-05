@@ -252,6 +252,18 @@ namespace produproperty.ViewModel
             }
         }
 
+        public void storage()
+        {
+            try
+            {
+                file_serialization(file.file, text);
+            }
+            catch
+            {
+                
+            }
+        }
+
         //private void tianjia(string str)
         //{
         //    string[] spilt = spilt_text();
@@ -293,11 +305,11 @@ namespace produproperty.ViewModel
             }
         }
 
-        public void new_file()
+        public async void new_file()
         {
             file_serialization(file.file, text);
-            file = new file_storage(null, _folder);
-            title = "请输入标题";
+            file = new file_storage(await _folder.CreateFileAsync("请输入标题.md",CreationCollisionOption.GenerateUniqueName), _folder);
+            title = file.name;
             text = "";
             textStack.Clear();
             file_observable_collection.Add(file);

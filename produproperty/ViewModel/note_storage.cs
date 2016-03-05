@@ -18,7 +18,11 @@ namespace produproperty.ViewModel
         /// </summary>
         public async void new_storage()
         {
-            navigate_folder(await folder_storage());
+            StorageFolder folder = await folder_storage();
+            if (folder != null)
+            {
+                navigate_folder(folder);
+            }
         }
 
         /// <summary>
@@ -26,13 +30,17 @@ namespace produproperty.ViewModel
         /// </summary>
         public async void open_storage()
         {
-            navigate_folder(await folder_storage());
+            StorageFolder folder = await folder_storage();
+            if (folder != null)
+            {
+                navigate_folder(folder);
+            }
         }
 
         private async Task<StorageFolder> folder_storage()
         {
             var picker = new FolderPicker();
-            picker.FileTypeFilter.Add("*.folder");
+            picker.FileTypeFilter.Add(".folder");
             picker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
             picker.ViewMode = PickerViewMode.Thumbnail;
             var folder = await picker.PickSingleFolderAsync();

@@ -60,7 +60,7 @@ namespace produproperty
             file_storage file = list_view.SelectedItem as file_storage;
             if (file != null)
             {
-                view.open_file(file.file);
+                view.open_file(file);
             }
         }
 

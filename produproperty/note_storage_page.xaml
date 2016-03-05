@@ -13,6 +13,6 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
-        
+      <Button Grid.Row="1" Margin="10,10,10,10" Content="确定" Click="{x:Bind view.new_storage}"></Button>
     </Grid>
 </Page>

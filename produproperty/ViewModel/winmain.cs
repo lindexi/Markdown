@@ -221,8 +221,42 @@ namespace produproperty.ViewModel
 
         public void mt()
         {
-            text = text.Insert(@select, "\n\n```\n\n\n```\n");
-            selectchange(@select + 5, 0);
+            if (@select >= text.Length)
+            {
+                text += "\n\n```\n\n\n```\n";
+            }
+            else
+            {
+                if (select_length == 0)
+                {
+                    if (text[@select] != '\n')
+                    {
+                        text = text.Insert(@select, "``");
+                        selectchange(@select + 1, 0);
+                    }
+                    else
+                    {
+                        text = text.Insert(@select, "\n\n```\n\n\n```\n");
+                        selectchange(@select + 5, 0);
+                    }
+                }
+                else
+                {
+                    string temp = text.Substring(@select, select_length);
+                    int n = temp.IndexOf('\n');
+                    string[] str = spilt_text();
+                    if (n > 0)
+                    {
+                        text = str[0] + "\n\n```\n" + str[1] + "\n```\n";
+                        selectchange(@select + 5, 0);
+                    }
+                    else
+                    {
+                        text = str[0] + "`" + str[1] + "`";
+                        selectchange(@select + 1, 0);
+                    }
+                }
+            }
         }
 
         public async void open_file(file_storage temp)
@@ -270,7 +304,7 @@ namespace produproperty.ViewModel
             }
             catch
             {
-                
+
             }
         }
 
@@ -318,7 +352,7 @@ namespace produproperty.ViewModel
         public async void new_file()
         {
             file_serialization(file.file, text);
-            file = new file_storage(await _folder.CreateFileAsync("请输入标题.md",CreationCollisionOption.GenerateUniqueName), _folder);
+            file = new file_storage(await _folder.CreateFileAsync("请输入标题.md", CreationCollisionOption.GenerateUniqueName), _folder);
             title = file.name;
             text = "";
             textStack.Clear();

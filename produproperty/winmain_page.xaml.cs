@@ -4,9 +4,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.ApplicationModel;
 using Windows.Media.SpeechSynthesis;
 using Windows.Storage;
 using Windows.System;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -21,6 +23,24 @@ namespace produproperty
         {
             InitializeComponent();
             _ctrl = false;
+            App.Current.Suspending += suspend;
+        }
+
+        private async void suspend(object sender, Windows.ApplicationModel.SuspendingEventArgs e)
+        {
+            SuspendingDeferral deferral = e.SuspendingOperation.GetDeferral();
+            MessageDialog message_dialog = new MessageDialog("当前还在运行，确定退出", "退出");
+            message_dialog.Commands.Add(new UICommand("确定", cmd => { }, "退出"));
+            message_dialog.Commands.Add(new UICommand("取消", cmd => { }));
+            message_dialog.DefaultCommandIndex = 0;
+            message_dialog.CancelCommandIndex = 1;
+            IUICommand result = await message_dialog.ShowAsync();
+            if (result.Id as string == "退出")
+            {
+
+            }
+
+            deferral.Complete();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -54,8 +74,16 @@ namespace produproperty
 
         private void selectext(object sender, RoutedEventArgs e)
         {
-            view.@select = text.SelectionStart;
-            view.select_length = text.SelectionLength;
+            TextBox text_box=sender as TextBox;
+            if (text_box == null)
+            {
+               
+            }
+            else
+            {
+                view.@select = text.SelectionStart;
+                view.select_length = text.SelectionLength;
+            }
 
             //view.reminder = view.text_line(view.text, text.SelectionStart);
             //try

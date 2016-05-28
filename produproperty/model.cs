@@ -323,8 +323,8 @@ namespace produproperty
                 file = await file.CopyAsync(folder, name + ".md", NameCollisionOption.GenerateUniqueName);
                 try
                 {
-                    StorageFolder folder = await ApplicationData.Current.LocalFolder.GetFolderAsync("text");
-                    System.IO.Directory.Delete(folder.Path,true);
+                    StorageFolder folder_storage = await ApplicationData.Current.LocalFolder.GetFolderAsync("text");
+                    System.IO.Directory.Delete(folder_storage.Path,true);
                 }
                 catch
                 {

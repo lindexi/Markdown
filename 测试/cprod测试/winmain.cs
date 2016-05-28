@@ -18,14 +18,14 @@ namespace cprod测试
             view.text = text;
             view.select = 1;
             view.select_length = 2;
-            view.clipboard_substitution("string");
+            //view.clipboard_substitution("string");
 
             Assert.AreEqual("要string文本", view.text);
 
             view.text = text;
             view.select = 1;
             view.select_length = 5;
-            view.clipboard_substitution("string");
+            //view.clipboard_substitution("string");
             Assert.AreEqual("要string", view.text);
         }
 

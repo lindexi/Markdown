@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="produproperty.winmain_page"
+    x:Class="produproperty.WinmainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:produproperty"
@@ -12,7 +12,7 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <Grid Grid.Column="1" Drop="{x:Bind view.dropimg}" DragOver="Grid_DragOver">
+        <Grid Grid.Column="1" Drop="{x:Bind View.dropimg}" DragOver="Grid_DragOver">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
@@ -22,10 +22,10 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <CommandBar IsOpen="True" Grid.Row="0">
-                <AppBarButton Icon="add" Click="{x:Bind view.new_file}"/>
-                <AppBarButton Icon="save" Click="{x:Bind view.storage}"/>
-                <AppBarButton Icon="undo" Click="{x:Bind view.cancel_text}"/>
-                <AppBarButton Content="粗体" Icon="Bold" Click="{x:Bind view.bold_text}"/>
+                <AppBarButton Icon="add" Click="{x:Bind View.new_file}"/>
+                <AppBarButton Icon="save" Click="{x:Bind View.storage}"/>
+                <AppBarButton Icon="undo" Click="{x:Bind View.cancel_text}"/>
+                <AppBarButton Content="粗体" Icon="Bold" Click="{x:Bind View.bold_text}"/>
                 <AppBarButton Content="斜体" />
                 <AppBarButton Content="标题" />
                 <AppBarButton Content="链接" Icon="Link" />
@@ -56,13 +56,13 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition />
                     </Grid.RowDefinitions>
-                    <TextBox Text="{x:Bind view.title,Mode=TwoWay}" Grid.Row="0" Margin="10,10,10,10" />
-                    <TextBox x:Name="text" Text="{x:Bind view.text,Mode=TwoWay}" Grid.Row="1" AcceptsReturn="True" KeyDown="keydown" KeyUp="keyup" LostFocus="{x:Bind view.storage}" TextChanged="textstorage"
+                    <TextBox Text="{x:Bind View.title,Mode=TwoWay}" Grid.Row="0" Margin="10,10,10,10" />
+                    <TextBox x:Name="text" Text="{x:Bind View.text,Mode=TwoWay}" Grid.Row="1" AcceptsReturn="True" KeyDown="keydown" KeyUp="keyup" LostFocus="{x:Bind View.storage}" TextChanged="textstorage"
                            SelectionChanged="selectext"  TextWrapping="Wrap" />
                     <MediaElement Grid.Row="0" x:Name="mediaelement" AutoPlay="True" Volume="1.0" />
                 </Grid>
             </Grid>
-            <TextBlock Grid.Row="2" Text="{x:Bind view.reminder,Mode=OneWay}" />
+            <TextBlock Grid.Row="2" Text="{x:Bind View.reminder,Mode=OneWay}" />
         </Grid>
         
     </Grid>

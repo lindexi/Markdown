@@ -1,5 +1,5 @@
 ﻿// lindexi
-// 9:47
+// 20:47
 
 #region
 
@@ -122,89 +122,6 @@ namespace produproperty.ViewModel
             }
         }
 
-        public int select;
-
-        public int select_length;
-        public Action<int, int> selectchange;
-        private readonly Random ran;
-        private readonly Stack<string> textStack;
-        private file_storage _file;
-
-        private file_storage _file_storage;
-
-        private StorageFolder _folder;
-
-        private string _text;
-        private string _title;
-
-        private void motify()
-        {
-            if (title != file.name)
-            {
-                file?.motify(title);
-                toc(_file_storage, _folder);
-            }
-        }
-
-        private async void file_storage_colleciton(StorageFolder folder)
-        {
-            string str = "默认";
-            await file_null(str);
-
-            IReadOnlyList<StorageFile> filel = await folder.GetFilesAsync();
-            //bool readme = false;
-            file_observable_collection.Clear();
-
-            foreach (StorageFile temp in filel.Where(temp => temp.FileType == ".md"))
-            {
-                if (temp.Name == "README.md")
-                {
-                    //if (file == null)
-                    //{
-                    //    file = temp;
-                    //}
-                    if (_file_storage == null)
-                    {
-                        _file_storage = new file_storage(temp, folder);
-                    }
-                    //readme = true;
-                }
-                file_observable_collection.Add(new file_storage(temp, folder));
-            }
-
-            if (_file_storage == null)
-            {
-                //_file = await _folder.CreateFileAsync("README.md");
-                //file = null;
-                string temp = "README.md";
-                _file_storage =
-                    new file_storage(await _folder.CreateFileAsync(temp, CreationCollisionOption.OpenIfExists), folder);
-                //title = "README.md";
-                //str = "";
-                //text = str;
-                // _file_storage.name = title;
-                file_observable_collection.Add(_file_storage);
-            }
-            if (file == null)
-            {
-                file = _file_storage;
-                title = file.name;
-                text = await file_deserialize(file.file);
-            }
-            toc(_file_storage, folder);
-        }
-
-        private async Task file_null(string str)
-        {
-            if (_folder == null)
-            {
-                StorageFolder folder = ApplicationData.Current.LocalFolder;
-                _folder =
-                    await
-                        folder.CreateFolderAsync(str, CreationCollisionOption.OpenIfExists);
-            }
-        }
-
         public void bold_text()
         {
             if (select_length > 0)
@@ -304,7 +221,127 @@ namespace produproperty.ViewModel
             }
             catch
             {
+            }
+        }
 
+        public async void new_file()
+        {
+            file_serialization(file.file, text);
+            file =
+                new file_storage(await _folder.CreateFileAsync("请输入标题.md", CreationCollisionOption.GenerateUniqueName),
+                    _folder);
+            title = file.name;
+            text = "";
+            textStack.Clear();
+            file_observable_collection.Add(file);
+            toc(_file_storage, _folder);
+        }
+
+        public void cancel_text()
+        {
+            _text = textStack.Pop();
+            OnPropertyChanged("str");
+        }
+
+        public string text_line(string text, int select)
+        {
+            if (select < 0)
+            {
+                select = 0;
+            }
+            string[] str = text.Split('\n');
+            foreach (string temp in str)
+            {
+                select -= temp.Length;
+                if (select <= 0)
+                {
+                    return temp;
+                }
+            }
+            return "";
+        }
+
+        private readonly Random ran;
+        private readonly Stack<string> textStack;
+        private file_storage _file;
+
+        private file_storage _file_storage;
+
+        private StorageFolder _folder;
+
+        private string _text;
+        private string _title;
+
+        public int select;
+
+        public int select_length;
+        public Action<int, int> selectchange;
+
+        private void motify()
+        {
+            if (title != file.name)
+            {
+                file?.motify(title);
+                toc(_file_storage, _folder);
+            }
+        }
+
+        private async void file_storage_colleciton(StorageFolder folder)
+        {
+            string str = "默认";
+            await file_null(str);
+
+            IReadOnlyList<StorageFile> filel = await folder.GetFilesAsync();
+            //bool readme = false;
+            file_observable_collection.Clear();
+
+            foreach (StorageFile temp in filel.Where(temp => temp.FileType == ".md"))
+            {
+                if (temp.Name == "README.md")
+                {
+                    //if (file == null)
+                    //{
+                    //    file = temp;
+                    //}
+                    if (_file_storage == null)
+                    {
+                        _file_storage = new file_storage(temp, folder);
+                    }
+                    //readme = true;
+                }
+                file_observable_collection.Add(new file_storage(temp, folder));
+            }
+
+            if (_file_storage == null)
+            {
+                //_file = await _folder.CreateFileAsync("README.md");
+                //file = null;
+                string temp = "README.md";
+                _file_storage =
+                    new file_storage(await _folder.CreateFileAsync(temp, CreationCollisionOption.OpenIfExists), folder);
+                //title = "README.md";
+                //str = "";
+                //text = str;
+                // _file_storage.name = title;
+                file_observable_collection.Add(_file_storage);
+            }
+            if (file == null)
+            {
+                file = _file_storage;
+                title = file.name;
+                text = await file_deserialize(file.file);
+            }
+            toc(_file_storage, folder);
+        }
+
+        private async Task file_null(string str)
+        {
+            if (_folder == null)
+            {
+                StorageFolder folder = ApplicationData.Current.LocalFolder;
+                _folder =
+                    await
+                        folder.CreateFolderAsync(str, CreationCollisionOption.OpenIfExists);
             }
         }
 
@@ -347,23 +384,6 @@ namespace produproperty.ViewModel
                 await Task.Delay(100);
                 toc(_file_storage, folder);
             }
-        }
-
-        public async void new_file()
-        {
-            file_serialization(file.file, text);
-            file = new file_storage(await _folder.CreateFileAsync("请输入标题.md", CreationCollisionOption.GenerateUniqueName), _folder);
-            title = file.name;
-            text = "";
-            textStack.Clear();
-            file_observable_collection.Add(file);
-            toc(_file_storage, _folder);
-        }
-
-        public void cancel_text()
-        {
-            _text = textStack.Pop();
-            OnPropertyChanged("str");
         }
 
         private async Task<string> clipboard(DataPackageView con)
@@ -429,24 +449,6 @@ namespace produproperty.ViewModel
             selectchange(str_spilt[0].Length + str.Length, 0);
         }
 
-        public string text_line(string text, int select)
-        {
-            if (select < 0)
-            {
-                select = 0;
-            }
-            string[] str = text.Split('\n');
-            foreach (string temp in str)
-            {
-                select -= temp.Length;
-                if (select <= 0)
-                {
-                    return temp;
-                }
-            }
-            return "";
-        }
-
         private async void file_serialization(StorageFile temp, string str)
         {
             int n;
@@ -509,7 +511,7 @@ namespace produproperty.ViewModel
                     ulong size = read_stream.Size;
                     if (size <= uint.MaxValue)
                     {
-                        str = data_reader.ReadString(await data_reader.LoadAsync((uint)size));
+                        str = data_reader.ReadString(await data_reader.LoadAsync((uint) size));
                         str = str.Replace("\r", "");
                         str = str.Replace("\n\n", "\n");
                         if (text_line(str, 0) == "#" + title)
@@ -566,7 +568,7 @@ namespace produproperty.ViewModel
                     folder.CreateFileAsync(
                         DateTime.Now.Year + DateTime.Now.Month.ToString() + DateTime.Now.Day +
                         DateTime.Now.Hour + DateTime.Now.Minute +
-                        ran.Next() % 10000 + ".png", CreationCollisionOption.GenerateUniqueName);
+                        ran.Next()%10000 + ".png", CreationCollisionOption.GenerateUniqueName);
             return file;
         }
 
@@ -588,7 +590,7 @@ namespace produproperty.ViewModel
             string str;
             file = await file.CopyAsync(temp.folder, file.Name, NameCollisionOption.GenerateUniqueName);
 
-            if (file.FileType == ".png" || file.FileType == ".jpg" || file.FileType == ".gif")
+            if ((file.FileType == ".png") || (file.FileType == ".jpg") || (file.FileType == ".gif"))
             {
                 str = $"![这里写图片描述]({temp.folder}/{file.Name})\n\n";
                 return str;
@@ -618,7 +620,6 @@ namespace produproperty.ViewModel
             }
 
             _b = storage(folder);
-
         }
 
         public string name
@@ -651,36 +652,6 @@ namespace produproperty.ViewModel
         {
             set;
             get;
-        }
-
-        private Task _b;
-
-        private async Task storage(StorageFolder folder)
-        {
-            if (string.IsNullOrEmpty(name))
-            {
-                string str = "请输入标题.md";
-                file = await folder.CreateFileAsync(str, CreationCollisionOption.GenerateUniqueName);
-                //name = file.Name;
-                int n;
-                n = name.IndexOf(".md");
-                if (n > 0)
-                {
-                    str = name.Substring(0, n);
-                }
-                this.folder = await folder.CreateFolderAsync(str, CreationCollisionOption.GenerateUniqueName);
-            }
-            else
-            {
-                if (name == "README.md")
-                {
-                    this.folder = await folder.CreateFolderAsync("image", CreationCollisionOption.OpenIfExists);
-                }
-                else
-                {
-                    this.folder = await folder.CreateFolderAsync(name, CreationCollisionOption.OpenIfExists);
-                }
-            }
         }
 
         public async void motify(string str)
@@ -723,7 +694,36 @@ namespace produproperty.ViewModel
                 await folder.RenameAsync(str, NameCollisionOption.GenerateUniqueName);
                 OnPropertyChanged("name");
             }
+        }
 
+        private Task _b;
+
+        private async Task storage(StorageFolder folder)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                string str = "请输入标题.md";
+                file = await folder.CreateFileAsync(str, CreationCollisionOption.GenerateUniqueName);
+                //name = file.Name;
+                int n;
+                n = name.IndexOf(".md");
+                if (n > 0)
+                {
+                    str = name.Substring(0, n);
+                }
+                this.folder = await folder.CreateFolderAsync(str, CreationCollisionOption.GenerateUniqueName);
+            }
+            else
+            {
+                if (name == "README.md")
+                {
+                    this.folder = await folder.CreateFolderAsync("image", CreationCollisionOption.OpenIfExists);
+                }
+                else
+                {
+                    this.folder = await folder.CreateFolderAsync(name, CreationCollisionOption.OpenIfExists);
+                }
+            }
         }
     }
 }

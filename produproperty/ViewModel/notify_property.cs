@@ -1,4 +1,7 @@
-﻿using System.ComponentModel;
+﻿// lindexi
+// 20:47
+
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -9,8 +12,6 @@ namespace produproperty.ViewModel
     /// </summary>
     public class notify_property : INotifyPropertyChanged
     {
-        private readonly StringBuilder _reminder;
-
         public notify_property()
         {
             _reminder = new StringBuilder();
@@ -33,17 +34,17 @@ namespace produproperty.ViewModel
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
         public void UpdateProper<T>(ref T properValue, T newValue, [CallerMemberName] string properName = "")
         {
             if (Equals(properValue, newValue))
+            {
                 return;
+            }
 
             properValue = newValue;
             if (properName != null)
             {
-                OnPropertyChanged(name: properName);
+                OnPropertyChanged(properName);
             }
         }
 
@@ -53,5 +54,9 @@ namespace produproperty.ViewModel
             var handler = PropertyChanged;
             handler?.Invoke(this, new PropertyChangedEventArgs(name));
         }
+
+        private readonly StringBuilder _reminder;
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

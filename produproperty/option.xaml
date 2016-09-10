@@ -12,7 +12,7 @@
             <AppBarButton Icon="Back" HorizontalAlignment="Left" Click="mainpage"/>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="默认保存位置"/>
-                <TextBlock Text="{x:Bind view.addressfolder,Mode=OneWay}"/>
+                <TextBlock Text="{x:Bind view.Addressfolder,Mode=OneWay}"/>
                 <Button Content="修改" Click="Button_Click"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
@@ -21,9 +21,10 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="字体大小"/>
-                <TextBox Text="{x:Bind view.width,Mode=TwoWay}" Margin="10,10,10,10"/>
+                <TextBox Text="{x:Bind view.Width,Mode=TwoWay}" Margin="10,10,10,10"/>
             </StackPanel>
-            <TextBox Header="广告" ></TextBox>
+            <TextBox Header="广告" />
         </StackPanel>
     </Grid>
 </Page>
+

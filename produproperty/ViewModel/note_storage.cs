@@ -1,4 +1,7 @@
-﻿using System;
+﻿// lindexi
+// 20:47
+
+using System;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -7,11 +10,15 @@ namespace produproperty.ViewModel
 {
     /// <summary>
     /// </summary>
-    public class note_storage
+    public class NoteStorage
     {
         /// <summary>
         /// </summary>
-        public Action<StorageFolder> navigate_folder;
+        public Action<StorageFolder> NavigateFolder
+        {
+            set;
+            get;
+        }
 
         /// <summary>
         ///     新建库
@@ -21,7 +28,7 @@ namespace produproperty.ViewModel
             StorageFolder folder = await folder_storage();
             if (folder != null)
             {
-                navigate_folder(folder);
+                NavigateFolder(folder);
             }
         }
 
@@ -33,7 +40,7 @@ namespace produproperty.ViewModel
             StorageFolder folder = await folder_storage();
             if (folder != null)
             {
-                navigate_folder(folder);
+                NavigateFolder(folder);
             }
         }
 

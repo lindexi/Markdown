@@ -1,4 +1,7 @@
-﻿using produproperty.ViewModel;
+﻿// lindexi
+// 20:47
+
+using produproperty.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,17 +15,19 @@ namespace produproperty
 {
     public partial class option
     {
-        viewModel view;
         public option()
         {
             InitializeComponent();
         }
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             view = e.Parameter as viewModel ?? new viewModel();
         }
 
-        private void mainpage(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private viewModel view;
+
+        private void mainpage(object sender, RoutedEventArgs e)
         {
             Frame frame = Window.Current.Content as Frame;
             frame.Navigate(typeof(MainPage), view);
@@ -30,7 +35,7 @@ namespace produproperty
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            view.accessfolder();
+            view.Accessfolder();
         }
     }
 }

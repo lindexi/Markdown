@@ -120,6 +120,9 @@
     <Compile Include="ViewModel\note_storage.cs" />
     <Compile Include="ViewModel\viewModel.cs" />
     <Compile Include="ViewModel\winmain.cs" />
+    <Compile Include="View\NoteStoragePage.xaml.cs">
+      <DependentUpon>NoteStoragePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="winmain_page.xaml.cs">
       <DependentUpon>winmain_page.xaml</DependentUpon>
     </Compile>
@@ -158,11 +161,16 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\NoteStoragePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="winmain_page.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

@@ -1,5 +1,5 @@
 ﻿// lindexi
-// 9:05
+// 20:47
 
 #region
 
@@ -25,20 +25,20 @@ namespace produproperty.ViewModel
             object temp;
             if (ApplicationData.Current.LocalSettings.Values.TryGetValue("width", out temp))
             {
-                width = temp as string;
+                Width = temp as string;
             }
             else
             {
-                width = "20";
+                Width = "20";
             }
 
-            advertisement = @"
+            Advertisement = @"
 作者：lindexi_gd
 邮箱：lindexi_gd@163.com
 博客地址：http://blog.csdn.net/lindexi_gd   在原博客看会有好的排版";
         }
 
-        public string text
+        public string Text
         {
             set
             {
@@ -51,7 +51,7 @@ namespace produproperty.ViewModel
             }
         }
 
-        public string name
+        public string Name
         {
             set
             {
@@ -64,7 +64,7 @@ namespace produproperty.ViewModel
             }
         }
 
-        public bool writetext
+        public bool Writetext
         {
             set
             {
@@ -77,7 +77,7 @@ namespace produproperty.ViewModel
             }
         }
 
-        public string addressfolder
+        public string Addressfolder
         {
             set
             {
@@ -89,7 +89,7 @@ namespace produproperty.ViewModel
             }
         }
 
-        public string width
+        public string Width
         {
             set
             {
@@ -111,7 +111,7 @@ namespace produproperty.ViewModel
             }
         }
 
-        public string advertisement
+        public string Advertisement
         {
             set
             {
@@ -126,41 +126,39 @@ namespace produproperty.ViewModel
                     object temp;
                     if (ApplicationData.Current.LocalSettings.Values.TryGetValue("advertisement", out temp))
                     {
-                        advertisement = temp as string;
+                        Advertisement = temp as string;
                     }
                     else
                     {
-                        advertisement = " ";
+                        Advertisement = " ";
                     }
                 }
                 return _advertisement;
             }
         }
 
-        public int select;
-
-        public Action<int, int> selectchange;
-        private string _advertisement;
-
-        private model _m;
-        private int _width;
-
-        public async void clipboard(TextControlPasteEventArgs e)
+        public Action<int, int> Selectchange
         {
-            if (writetext)
+            set;
+            get;
+        }
+
+        public async void Clipboard(TextControlPasteEventArgs e)
+        {
+            if (Writetext)
             {
                 return;
             }
 
             e.Handled = true;
-            DataPackageView con = Clipboard.GetContent();
+            DataPackageView con = Windows.ApplicationModel.DataTransfer.Clipboard.GetContent();
             string str = await _m.clipboard(con);
-            tianjia(str);
+            Tianjia(str);
         }
 
-        public async void storage()
+        public async void Storage()
         {
-            if (writetext)
+            if (Writetext)
             {
                 return;
             }
@@ -169,9 +167,9 @@ namespace produproperty.ViewModel
             //_m.Current_Suspending(this, new object() as SuspendingEventArgs);  
         }
 
-        public async void dropimg(object sender, DragEventArgs e)
+        public async void Dropimg(object sender, DragEventArgs e)
         {
-            if (writetext)
+            if (Writetext)
             {
                 return;
             }
@@ -180,7 +178,7 @@ namespace produproperty.ViewModel
             {
                 DataPackageView dataView = e.DataView;
                 string str = await _m.clipboard(dataView);
-                tianjia(str);
+                Tianjia(str);
             }
             finally
             {
@@ -188,7 +186,7 @@ namespace produproperty.ViewModel
             }
         }
 
-        public async void accessfolder()
+        public async void Accessfolder()
         {
             FolderPicker pick = new FolderPicker();
             pick.FileTypeFilter.Add("*");
@@ -197,7 +195,7 @@ namespace produproperty.ViewModel
             {
                 _m.accessfolder(folder);
             }
-            addressfolder = string.Empty;
+            Addressfolder = string.Empty;
         }
 
         public async void file_open()
@@ -220,30 +218,37 @@ namespace produproperty.ViewModel
             }
         }
 
-        public void tianjia(string str)
+        public void Tianjia(string str)
         {
             int n;
-            n = select;
+            n = Select;
             int i;
-            for (i = 0; n > 0 && i < text.Length; i++)
+            for (i = 0; (n > 0) && (i < Text.Length); i++)
             {
-                if (text[i] != '\r') //&& text[i] != '\n')
+                if (Text[i] != '\r') //&& text[i] != '\n')
                 {
                     n--;
                 }
             }
-            text = text.Insert(i, str);
+            Text = Text.Insert(i, str);
             str = str.Replace("\r", "");
-            n = select + str.Length;
-            if (n > text.Length)
+            n = Select + str.Length;
+            if (n > Text.Length)
             {
-                n = text.Length;
+                n = Text.Length;
             }
-            selectchange(n, 0);
+            Selectchange(n, 0);
 
             //string t = text.Replace("\r\n", "\n");
             //t = t.Insert(select, str);
             //text = t.Replace("\n", "\r\n");
         }
+
+        private string _advertisement;
+
+        private model _m;
+        private int _width;
+
+        public int Select;
     }
 }

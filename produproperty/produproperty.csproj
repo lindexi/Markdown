@@ -109,15 +109,13 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="model.cs" />
-    <Compile Include="note_storage_page.xaml.cs">
-      <DependentUpon>note_storage_page.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ViewModel\notify_property.cs" />
+    <Compile Include="ImpliedFolderStorage.cs" />
+    <Compile Include="ViewModel\NotifyProperty.cs" />
     <Compile Include="option.xaml.cs">
       <DependentUpon>option.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModel\note_storage.cs" />
+    <Compile Include="ViewModel\NoteStorage.cs" />
     <Compile Include="ViewModel\viewModel.cs" />
     <Compile Include="ViewModel\winmain.cs" />
     <Compile Include="View\NoteStoragePage.xaml.cs">
@@ -152,10 +150,6 @@
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="note_storage_page.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="option.xaml">
       <SubType>Designer</SubType>

@@ -2,6 +2,8 @@
 // 20:47
 
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -12,6 +14,22 @@ namespace produproperty.ViewModel
     /// </summary>
     public class NoteStorage
     {
+        public NoteStorage()
+        {
+            Read();
+        }
+
+        private void Read()
+        {
+            
+        }
+
+        public ObservableCollection<ImpliedFolderStorage> FolderStorage
+        {
+            set;
+            get;
+        }
+
         /// <summary>
         /// </summary>
         public Action<StorageFolder> NavigateFolder
@@ -31,6 +49,8 @@ namespace produproperty.ViewModel
                 NavigateFolder(folder);
             }
         }
+
+
 
         /// <summary>
         ///     打开
@@ -52,6 +72,46 @@ namespace produproperty.ViewModel
             picker.ViewMode = PickerViewMode.Thumbnail;
             var folder = await picker.PickSingleFolderAsync();
             return folder;
+        }
+    }
+
+    public class NoteGoverment
+    {
+        public NoteGoverment()
+        {
+
+        }
+
+        public List<ImpliedFolderStorage> FolderStorage
+        {
+            set;
+            get;
+        }
+
+        private void Read()
+        {
+            
+        }
+
+        public void NewFolderStorage(StorageFolder storageFolder)
+        {
+            //放入记录
+
+        }
+
+
+        private static NoteGoverment _noteGoverment;
+
+        public static NoteGoverment Notegoverment
+        {
+            set
+            {
+                _noteGoverment = value;
+            }
+            get
+            {
+                return _noteGoverment??(_noteGoverment=new NoteGoverment());
+            }
         }
     }
 }

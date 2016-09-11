@@ -22,7 +22,7 @@ namespace produproperty.ViewModel
 {
     /// <summary>
     /// </summary>
-    public class winmain : notify_property
+    public class winmain : NotifyProperty
     {
         public winmain(StorageFolder folder)
         {
@@ -600,7 +600,7 @@ namespace produproperty.ViewModel
         }
     }
 
-    public class file_storage : notify_property
+    public class file_storage : NotifyProperty
     {
         //public file_storage(StorageFile file)
         //{

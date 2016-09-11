@@ -10,9 +10,9 @@ namespace produproperty.ViewModel
     /// <summary>
     ///     提供继承通知UI改变值
     /// </summary>
-    public class notify_property : INotifyPropertyChanged
+    public class NotifyProperty : INotifyPropertyChanged
     {
-        public notify_property()
+        public NotifyProperty()
         {
             _reminder = new StringBuilder();
         }
@@ -20,13 +20,13 @@ namespace produproperty.ViewModel
         /// <summary>
         ///     一直添加value
         /// </summary>
-        public string reminder
+        public string Reminder
         {
             set
             {
                 _reminder.Clear();
                 _reminder.Append(value);
-                OnPropertyChanged("reminder");
+                OnPropertyChanged();
             }
             get
             {

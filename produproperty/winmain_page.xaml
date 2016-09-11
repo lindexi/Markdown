@@ -62,7 +62,7 @@
                     <MediaElement Grid.Row="0" x:Name="mediaelement" AutoPlay="True" Volume="1.0" />
                 </Grid>
             </Grid>
-            <TextBlock Grid.Row="2" Text="{x:Bind View.reminder,Mode=OneWay}" />
+            <TextBlock Grid.Row="2" Text="{x:Bind View.Reminder,Mode=OneWay}" />
         </Grid>
         
     </Grid>

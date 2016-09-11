@@ -48,6 +48,11 @@ namespace produproperty
             track();
         }
 
+        protected override void OnFileActivated(FileActivatedEventArgs args)
+        {
+            base.OnFileActivated(args);
+        }
+
 
         /// <summary>
         ///     在应用程序由最终用户正常启动时进行调用。
@@ -88,7 +93,7 @@ namespace produproperty
                 // 当导航堆栈尚未还原时，导航到第一页，
                 // 并通过将所需信息作为导航参数传入来配置
                 // 参数
-                rootFrame.Navigate(typeof(NoteStoragePage), e.Arguments);
+                rootFrame.Navigate(typeof(View.NoteStoragePage), e.Arguments);
             }
             // 确保当前窗口处于活动状态
             Window.Current.Activate();

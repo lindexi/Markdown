@@ -367,11 +367,11 @@ namespace produproperty
         {
             set
             {
-                view.reminder = value;
+                view.Reminder = value;
             }
             get
             {
-                return view.reminder;
+                return view.Reminder;
             }
         }
 

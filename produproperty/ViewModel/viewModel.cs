@@ -14,7 +14,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace produproperty.ViewModel
 {
-    internal class viewModel : notify_property
+    internal class viewModel : NotifyProperty
     {
         public viewModel()
         {

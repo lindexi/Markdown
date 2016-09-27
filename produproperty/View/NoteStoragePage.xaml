@@ -15,7 +15,10 @@
                 <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
             <Grid>
-                <ListView ItemsSource="{x:Bind View.FolderStorage}">
+                <TextBlock Text="{x:Bind View.FoundEmptFolder}"
+                           TextWrapping="Wrap"
+                           HorizontalAlignment="Center"></TextBlock>
+                <ListView ItemsSource="{x:Bind View.FolderStorage}" IsItemClickEnabled="True">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="HorizontalContentAlignment"
@@ -26,6 +29,7 @@
                         <DataTemplate x:DataType="view:ImpliedFolderStorage">
                             <Grid>
                                 <TextBlock Text="{x:Bind Name}"></TextBlock>
+                                
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
@@ -34,7 +38,8 @@
             <Grid Grid.Row="1">
                 <StackPanel>
                     <Button Margin="10,10,10,10" Content="新建"
-                            HorizontalAlignment="Stretch"></Button>
+                            HorizontalAlignment="Stretch"
+                            ></Button>
                     <Button Margin="10,10,10,10" Content="打开"
                             HorizontalAlignment="Stretch"></Button>
 

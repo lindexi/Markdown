@@ -110,6 +110,8 @@
     </Compile>
     <Compile Include="model.cs" />
     <Compile Include="ImpliedFolderStorage.cs" />
+    <Compile Include="NewNoteStorage.cs" />
+    <Compile Include="ViewModel\NoteGoverment.cs" />
     <Compile Include="ViewModel\NotifyProperty.cs" />
     <Compile Include="option.xaml.cs">
       <DependentUpon>option.xaml</DependentUpon>

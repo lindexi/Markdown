@@ -25,8 +25,9 @@ namespace produproperty.View
     {
         public NoteStoragePage()
         {
-            View=new NoteStorage();
+            View = new NoteStorage();
             this.InitializeComponent();
+            NavigationCacheMode=NavigationCacheMode.Enabled;
         }
 
         private NoteStorage View
@@ -34,5 +35,7 @@ namespace produproperty.View
             set;
             get;
         }
+
+
     }
 }

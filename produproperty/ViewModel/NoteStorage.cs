@@ -2,26 +2,38 @@
 // 20:47
 
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using Windows.Data.Xml.Dom;
 using Windows.Storage;
+using Windows.Storage.AccessCache;
 using Windows.Storage.Pickers;
+using Windows.UI.Notifications;
+using Windows.UI.Xaml;
 
 namespace produproperty.ViewModel
 {
     /// <summary>
     /// </summary>
-    public class NoteStorage
+    public class NoteStorage:NotifyProperty
     {
         public NoteStorage()
         {
             Read();
         }
 
-        private void Read()
+        private async void Read()
         {
-            
+            await NoteGoverment.Notegoverment.Read();
+            FolderStorage=new ObservableCollection<ImpliedFolderStorage>();
+            if (NoteGoverment.Notegoverment.FolderStorage.Count == 0)
+            {
+                FoundEmptFolderVisibility=Visibility.Visible;
+            }
+            else
+            {
+                FoundEmptFolderVisibility=Visibility.Collapsed;
+            }
         }
 
         public ObservableCollection<ImpliedFolderStorage> FolderStorage
@@ -50,6 +62,27 @@ namespace produproperty.ViewModel
             }
         }
 
+        public string FoundEmptFolder
+        {
+            set;
+            get;
+        } = "没有找到存储文件\r\n请新建或选择一个已有文件夹";
+
+        public Visibility FoundEmptFolderVisibility
+        {
+            set
+            {
+                _foundEmptFolderVisibility = value;
+                OnPropertyChanged();
+            }
+            get
+            {
+                return _foundEmptFolderVisibility;
+            }
+        }
+
+        private Visibility _foundEmptFolderVisibility;
+
 
 
         /// <summary>
@@ -64,6 +97,18 @@ namespace produproperty.ViewModel
             }
         }
 
+        private void ToastText(string str)
+        {
+            var toastText = Windows.UI.Notifications.
+                    ToastTemplateType.ToastText01;
+            var content = Windows.UI.Notifications.
+                ToastNotificationManager.GetTemplateContent(toastText);
+            XmlNodeList xml = content.GetElementsByTagName("text");
+            xml[0].AppendChild(content.CreateTextNode(str));
+            ToastNotification toast = new ToastNotification(content);
+            ToastNotificationManager.CreateToastNotifier().Show(toast);
+        }
+
         private async Task<StorageFolder> folder_storage()
         {
             var picker = new FolderPicker();
@@ -72,46 +117,6 @@ namespace produproperty.ViewModel
             picker.ViewMode = PickerViewMode.Thumbnail;
             var folder = await picker.PickSingleFolderAsync();
             return folder;
-        }
-    }
-
-    public class NoteGoverment
-    {
-        public NoteGoverment()
-        {
-
-        }
-
-        public List<ImpliedFolderStorage> FolderStorage
-        {
-            set;
-            get;
-        }
-
-        private void Read()
-        {
-            
-        }
-
-        public void NewFolderStorage(StorageFolder storageFolder)
-        {
-            //放入记录
-
-        }
-
-
-        private static NoteGoverment _noteGoverment;
-
-        public static NoteGoverment Notegoverment
-        {
-            set
-            {
-                _noteGoverment = value;
-            }
-            get
-            {
-                return _noteGoverment??(_noteGoverment=new NoteGoverment());
-            }
         }
     }
 }

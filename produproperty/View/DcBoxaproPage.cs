@@ -49,15 +49,19 @@ namespace produproperty.View
             Key = new KeyBehavior(this);
             Key.Add(new KeyAction("ctrl+S", (e) =>
             {
-                e.Execute = false; Storage();
+                e.Execute = false;
+                Storage();
                 e.Execute = true;
             }));
         }
 
         private void Storage()
         {
-
+            Storaged?.Invoke(this,null);
         }
+
+        public event EventHandler Storaged;
+        
 
         private void DcBoxaproPage_TextChanged(object sender, RoutedEventArgs e)
         {
@@ -65,45 +69,6 @@ namespace produproperty.View
             Document.GetText(TextGetOptions.None, out str);
             _text = true;
             Text = str;
-        }
-
-        protected override void OnKeyDown(KeyRoutedEventArgs e)
-        {
-            var controlKeyState = Window.Current.CoreWindow.GetKeyState(VirtualKey.Control);
-            var ctrl = (controlKeyState & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
-            var shiftKeyState = Window.Current.CoreWindow.GetKeyState(VirtualKey.Shift);
-            var shift = (shiftKeyState & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
-            var altKeyState = Window.Current.CoreWindow.GetKeyState(VirtualKey.Menu);
-            var alt = (altKeyState & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
-
-            if (!ctrl && !shift && !alt)
-            {
-                return;
-            }
-
-            var key = e.Key.ToString();
-
-            if (key == "Control" || key == "Shift" || key == "Menu")
-            {
-                return;
-            }
-
-            StringBuilder str = new StringBuilder();
-            if (ctrl)
-            {
-                str.Append("ctrl+");
-            }
-            if (shift)
-            {
-                str.Append("shift+");
-            }
-            if (alt)
-            {
-                str.Append("alt+");
-            }
-            str.Append(e.Key.ToString());
-
-            base.OnKeyDown(e);
         }
 
         private bool _text;

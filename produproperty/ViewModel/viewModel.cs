@@ -33,6 +33,7 @@ namespace produproperty.ViewModel
 
         private string _str;
 
+
         public string Str
         {
             set
@@ -87,7 +88,7 @@ namespace produproperty.ViewModel
             Read();
         }
 
-        private void Read()
+        public void Read()
         {
         }
     }

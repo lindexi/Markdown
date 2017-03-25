@@ -25,7 +25,7 @@
             <!--<FrameworkElement.Resources>
                 <ResourceDictionary Source="Themes/Generic.xaml"></ResourceDictionary>
             </FrameworkElement.Resources>-->
-            <view:DcBoxaproPage Text="{x:Bind ViewModel.Str,Mode=TwoWay}"></view:DcBoxaproPage>
+            <view:DcBoxaproPage Text="{x:Bind ViewModel.Str,Mode=TwoWay}" Storaged="{x:Bind ViewModel.Read}"></view:DcBoxaproPage>
             <!--<RichEditBox TextChanged="RichEditBox_OnTextChanged" Style="{StaticResource RichEditBoxStyle1}"></RichEditBox>-->
         </Grid>
         <Grid Grid.Column="1">

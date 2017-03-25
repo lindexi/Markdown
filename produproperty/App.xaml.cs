@@ -50,6 +50,15 @@ namespace produproperty
 
         protected override void OnFileActivated(FileActivatedEventArgs args)
         {
+            var file = args.Files[0];
+            Frame frame = Window.Current.Content as Frame;
+            if (frame == null)
+            {
+                frame = new Frame();
+                Window.Current.Content = frame;
+            }
+            frame.Navigate(typeof(MainPage), file);
+            Window.Current.Activate();
             base.OnFileActivated(args);
         }
 
@@ -100,10 +109,13 @@ namespace produproperty
             track();
         }
 
+
+
         private void App_Resuming(object sender, object e)
         {
             track();
         }
+
 
         private async void track()
         {

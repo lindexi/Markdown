@@ -50,10 +50,10 @@ namespace produproperty.ViewModel
 
         public override void OnNavigatedTo(object obj)
         {
-            Content = (Frame)obj;
+            Content = (Frame)Window.Current.Content;
 #if NOGUI
 #else
-            Content.Navigate(typeof(SplashPage));
+            //Content.Navigate(typeof(SplashPage));
 #endif
             if (ViewModel == null)
             {
@@ -85,11 +85,15 @@ namespace produproperty.ViewModel
                 }
             }
 
-            Read();
+            //Read();
         }
 
-        public void Read()
+        public async Task Read()
         {
+            FileSavePicker pick=new FileSavePicker();
+            pick.FileTypeChoices.Add("txt",new List<string>(){".txt"});
+            var file = await pick.PickSaveFileAsync();
+            await FileIO.WriteTextAsync(file, Str);
         }
     }
 

@@ -15,24 +15,34 @@ namespace produproperty.ViewModel
 {
     /// <summary>
     /// </summary>
-    public class NoteStorage:NotifyProperty
+    public class NoteStorageModel : NotifyProperty
     {
-        public NoteStorage()
+        public NoteStorageModel()
         {
-            Read();
+            //Read();
         }
 
-        private async void Read()
+        public async void Navigateto()
+        {
+            //
+
+            await Read();
+
+        }
+
+
+
+        private async Task Read()
         {
             await NoteGoverment.Notegoverment.Read();
-            FolderStorage=new ObservableCollection<ImpliedFolderStorage>();
+            FolderStorage = new ObservableCollection<ImpliedFolderStorage>();
             if (NoteGoverment.Notegoverment.FolderStorage.Count == 0)
             {
-                FoundEmptFolderVisibility=Visibility.Visible;
+                FoundEmptFolderVisibility = Visibility.Visible;
             }
             else
             {
-                FoundEmptFolderVisibility=Visibility.Collapsed;
+                FoundEmptFolderVisibility = Visibility.Collapsed;
             }
         }
 

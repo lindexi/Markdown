@@ -4,6 +4,7 @@
 #region
 
 using System;
+using System.ServiceModel.Channels;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -14,6 +15,54 @@ using Windows.UI.Xaml.Controls;
 
 namespace produproperty.ViewModel
 {
+    public class ViewModel : INavigateable
+    {
+        public ViewModel()
+        {
+            
+        }
+
+
+        public void Navigateto(object sender, object e)
+        {
+            
+        }
+
+        public void NavigateFrom(object sender, object e)
+        {
+            
+        }
+    }
+
+    public class ViewModelMessage: NotifyProperty
+    {
+     
+       
+    }
+
+    interface INavigateable
+    {
+        void Navigateto(object sender,object e);
+        void NavigateFrom(object sender, object e);
+
+    }
+
+    interface INavigate
+    {
+        void Navigate(string key);
+    }
+
+    class Message: IMessage
+    {
+        
+    }
+
+    interface IMessage
+    {
+        
+    }
+
+
     internal class viewModel : NotifyProperty
     {
         public viewModel()

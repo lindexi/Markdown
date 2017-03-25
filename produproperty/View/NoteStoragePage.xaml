@@ -28,8 +28,15 @@
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="view:ImpliedFolderStorage">
                             <Grid>
-                                <TextBlock Text="{x:Bind Name}"></TextBlock>
-                                
+                                <Image Source="{x:Bind Image,Mode=OneWay}"
+                                       Width="50"
+                                       Height="100"
+                                       HorizontalAlignment="Left"></Image>
+                                <StackPanel  Margin="60,10,10,10">
+                                    <TextBlock Text="{x:Bind Name,Mode=OneWay}"
+                                               ></TextBlock>
+                                    <!--<TextBlock Text="{x:Bind }"></TextBlock>-->
+                                </StackPanel>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>

@@ -5,27 +5,61 @@
     xmlns:local="using:produproperty"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:view="using:produproperty.View"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    DataContext="{StaticResource ViewModel}"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" AllowDrop="True" Drop="{x:Bind view.Dropimg}" DragOver="Grid_DragOver" KeyDown="text_KeyDown" KeyUp="text_KeyUp">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition />
-            <RowDefinition Height="auto"/>
-        </Grid.RowDefinitions>
-        <TextBox Text="{x:Bind view.Name,Mode=TwoWay}" Grid.Row="0" Margin="10,10,10,10"/>
-        <TextBox x:Name="text" Text="{Binding Path=text,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Margin="10,10,10,10" Grid.Row="1" TextWrapping="Wrap" AcceptsReturn="True" IsReadOnly="{x:Bind view.Writetext,Mode=OneWay}" SelectionChanged="text_SelectionChanged" TextAlignment="Left" FontSize="{x:Bind view.Width,Mode=OneWay}"/>
-        <!--<RichEditBox x:Name="rtext" Margin="10,10,10,10"/>-->
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
+        <!--<view:Foobar></view:Foobar>-->
+        
 
-        <TextBlock Text="{x:Bind view.Reminder,Mode=OneWay}" Grid.Row="2" Margin="10,10,10,10" TextWrapping="Wrap"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        
+        <Grid Background="#565656">
+            <!--<FrameworkElement.Resources>
+                <ResourceDictionary Source="Themes/Generic.xaml"></ResourceDictionary>
+            </FrameworkElement.Resources>-->
+            <!--<view:DcBoxaproPage Width="200" Header="100" TextChanged="RichEditBox_OnTextChanged"></view:DcBoxaproPage>-->
+            <RichEditBox TextChanged="RichEditBox_OnTextChanged"></RichEditBox>
+        </Grid>
+        <Grid Grid.Column="1">
+            <controls:MarkdownTextBlock x:Name="Txt" Width="200"></controls:MarkdownTextBlock>
+          
+        </Grid>
+        
+        <!--<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" AllowDrop="True"
+              Drop="{x:Bind view.Dropimg}" DragOver="Grid_DragOver" KeyDown="text_KeyDown" KeyUp="text_KeyUp">
+
+            -->
+        <!--<Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition />
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <TextBox Text="{x:Bind view.Name,Mode=TwoWay}" Grid.Row="0" Margin="10,10,10,10"/>
+            <TextBox x:Name="text" Text="{Binding Path=text,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Margin="10,10,10,10" Grid.Row="1" TextWrapping="Wrap" AcceptsReturn="True" IsReadOnly="{x:Bind view.Writetext,Mode=OneWay}" SelectionChanged="text_SelectionChanged" TextAlignment="Left" FontSize="{x:Bind view.Width,Mode=OneWay}"/>
+            -->
+        <!--<RichEditBox x:Name="rtext" Margin="10,10,10,10"/>-->
+        <!--
+
+            <TextBlock Text="{x:Bind view.Reminder,Mode=OneWay}" Grid.Row="2" Margin="10,10,10,10" TextWrapping="Wrap"/>
+
+        </Grid>-->
         <!--<Button Content="确定" Click="{x:Bind view.property}" Margin="121,300,0,308"/>-->
+        <!--
+        </Grid>-->
     </Grid>
-    <Page.TopAppBar>
+    <!--<Page.TopAppBar>
         <CommandBar>
-            <!--<AppBarButton Icon="Add" Content="新建" Click="{x:Bind view.fileaddress}"/>-->
-            <AppBarButton Icon="OpenFile" Content="打开" Click="{x:Bind view.file_open}" />
+            --><!--<AppBarButton Icon="Add" Content="新建" Click="{x:Bind view.fileaddress}"/>-->
+            <!--<AppBarButton Icon="OpenFile" Content="打开" Click="{x:Bind view.file_open}" />
             <AppBarButton Icon="Save" Content="保存" Click="{x:Bind view.Storage}"/>
-            <AppBarButton Icon="Setting" Content="设置" Click="option"/>
+            <AppBarButton Icon="Setting" Content="设置" Click="option"/>--><!--
         </CommandBar>
-    </Page.TopAppBar>
+    </Page.TopAppBar>-->
 </Page>

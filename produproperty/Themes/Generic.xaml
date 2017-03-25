@@ -1,12 +1,13 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:produproperty">
-
-    <Style TargetType="local2:DcBoxaproPage" xmlns:local2="using:produproperty.View">
-        <Setter Property="Template">
+    xmlns:local="using:produproperty"
+    xmlns:view="using:produproperty.View">
+    <Style x:Key="RichEditBox" TargetType="RichEditBox"></Style>
+    <Style TargetType="view:DcBoxaproPage">
+        <!--<Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="local2:DcBoxaproPage">
+                <ControlTemplate TargetType="view:DcBoxaproPage">
                     <Border
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
@@ -14,6 +15,10 @@
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
-        </Setter>
+        </Setter>-->
+    </Style>
+    <Style x:Key="Foobar" TargetType="TextBox"></Style>
+    <Style TargetType="view:Foobar" BasedOn="{StaticResource Foobar}">
+      
     </Style>
 </ResourceDictionary>

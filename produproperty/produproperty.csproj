@@ -121,8 +121,12 @@
     <Compile Include="ViewModel\viewModel.cs" />
     <Compile Include="ViewModel\winmain.cs" />
     <Compile Include="View\DcBoxaproPage.cs" />
+    <Compile Include="ViewModel\MarvelousTonsortModel.cs" />
     <Compile Include="View\NoteStoragePage.xaml.cs">
       <DependentUpon>NoteStoragePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SplashPage.xaml.cs">
+      <DependentUpon>SplashPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="winmain_page.xaml.cs">
       <DependentUpon>winmain_page.xaml</DependentUpon>
@@ -195,6 +199,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\NoteStoragePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SplashPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

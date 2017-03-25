@@ -33,9 +33,11 @@ namespace produproperty
         public MainPage()
         {
             this.InitializeComponent();
-            
+            ViewModel = (ViewModel.ViewModel) DataContext;
             //text.Paste += Text_Paste;
         }
+
+        public ViewModel.ViewModel ViewModel { get; set; }
 
         //protected override void OnNavigatedTo(NavigationEventArgs e)
         //{
@@ -125,11 +127,12 @@ namespace produproperty
         //    frame.Navigate(typeof(option), view);
         //}
 
-        private void RichEditBox_OnTextChanged(object sender, RoutedEventArgs e)
-        {
-            string str = "";
-            (sender as RichEditBox).Document.GetText(TextGetOptions.None, out str);
-            //Txt.Text = str;
-        }
+        //private void RichEditBox_OnTextChanged(object sender, RoutedEventArgs e)
+        //{
+        //    string str = "";
+        //    (sender as RichEditBox).Document.GetText(TextGetOptions.None, out str);
+        //    //Txt.Text = str;
+
+        //}
     }
 }

@@ -31,6 +31,18 @@ namespace produproperty.ViewModel
             Send += Receive;
         }
 
+        private string _str;
+
+        public string Str
+        {
+            set
+            {
+                _str = value;
+                OnPropertyChanged();
+            }
+            get { return _str; }
+        }
+
         public override void OnNavigatedFrom(object obj)
         {
         }

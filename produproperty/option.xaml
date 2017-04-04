@@ -8,7 +8,7 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <StackPanel Orientation="Vertical">
+        <!--<StackPanel Orientation="Vertical">
             <AppBarButton Icon="Back" HorizontalAlignment="Left" Click="mainpage"/>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="默认保存位置"/>
@@ -24,7 +24,7 @@
                 <TextBox Text="{x:Bind view.Width,Mode=TwoWay}" Margin="10,10,10,10"/>
             </StackPanel>
             <TextBox Header="广告" />
-        </StackPanel>
+        </StackPanel>-->
     </Grid>
 </Page>
 

@@ -1,19 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
-using System.Text;
 using System.Windows.Input;
-using Windows.System;
-using Windows.UI.Core;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Documents;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
 using Microsoft.Toolkit.Uwp.UI.Controls;
@@ -46,13 +41,13 @@ namespace produproperty.View
             TextChanged += DcBoxaproPage_TextChanged;
 
 
-            Key = new KeyBehavior(this);
-            Key.Add(new KeyAction("ctrl+S", (e) =>
-            {
-                e.Execute = false;
-                Storage();
-                e.Execute = true;
-            }));
+            //Key = new KeyBehavior(this);
+            //Key.Add(new KeyAction("ctrl+S", (e) =>
+            //{
+            //    e.Execute = false;
+            //    Storage();
+            //    e.Execute = true;
+            //}));
         }
 
         private void Storage()
@@ -166,100 +161,6 @@ namespace produproperty.View
     }
 
 
-    public class KeyAction
-    {
-        public string Key { get; set; }
-
-        public KeyAction(string key, Action<KeyAction> action)
-        {
-            Action = action;
-            Key = key;
-        }
-
-        public Action<KeyAction> Action { get; set; }
-
-        public void Run()
-        {
-            if (!Execute || !_action)
-            {
-                return;
-            }
-            _action = false;
-            Action?.Invoke(this);
-            _action = true;
-        }
-
-        public bool Execute { get; set; } = true;
-        private bool _action = true;
-    }
-
-
-
-    public class KeyBehavior : IDisposable
-    {
-        public KeyBehavior(UIElement e)
-        {
-            e.KeyDown += OnKeyDown;
-            _element = e;
-        }
-
-        private UIElement _element;
-
-        public Dictionary<string, KeyAction> Action { get; set; } = new Dictionary<string, KeyAction>();
-
-        public void Add(KeyAction action)
-        {
-            Action.Add(action.Key, action);
-        }
-
-        private void OnKeyDown(object sender, KeyRoutedEventArgs e)
-        {
-            var controlKeyState = Window.Current.CoreWindow.GetKeyState(VirtualKey.Control);
-            var ctrl = (controlKeyState & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
-            var shiftKeyState = Window.Current.CoreWindow.GetKeyState(VirtualKey.Shift);
-            var shift = (shiftKeyState & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
-            var altKeyState = Window.Current.CoreWindow.GetKeyState(VirtualKey.Menu);
-            var alt = (altKeyState & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
-
-            if (!ctrl && !shift && !alt)
-            {
-                return;
-            }
-
-            var key = e.Key.ToString();
-
-            if (key == "Control" || key == "Shift" || key == "Menu")
-            {
-                return;
-            }
-
-            StringBuilder str = new StringBuilder();
-            if (ctrl)
-            {
-                str.Append("ctrl+");
-            }
-            if (shift)
-            {
-                str.Append("shift+");
-            }
-            if (alt)
-            {
-                str.Append("alt+");
-            }
-            str.Append(key);
-
-            key = str.ToString();
-            if (Action.ContainsKey(key))
-            {
-                Action[key].Run();
-            }
-        }
-
-        public void Dispose()
-        {
-            _element.KeyDown -= OnKeyDown;
-            Action.Clear();
-        }
-    }
+   
 }
 

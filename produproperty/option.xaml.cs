@@ -20,22 +20,22 @@ namespace produproperty
             InitializeComponent();
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            view = e.Parameter as viewModel ?? new viewModel();
-        }
+        //protected override void OnNavigatedTo(NavigationEventArgs e)
+        //{
+        //    view = e.Parameter as viewModel ?? new viewModel();
+        //}
 
-        private viewModel view;
+        //private viewModel view;
 
-        private void mainpage(object sender, RoutedEventArgs e)
-        {
-            Frame frame = Window.Current.Content as Frame;
-            frame.Navigate(typeof(MainPage), view);
-        }
+        //private void mainpage(object sender, RoutedEventArgs e)
+        //{
+        //    Frame frame = Window.Current.Content as Frame;
+        //    frame.Navigate(typeof(MainPage), view);
+        //}
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            view.Accessfolder();
-        }
+        //private void Button_Click(object sender, RoutedEventArgs e)
+        //{
+        //    view.Accessfolder();
+        //}
     }
 }

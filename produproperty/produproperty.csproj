@@ -16,8 +16,8 @@
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <PackageCertificateKeyFile>produproperty_StoreKey.pfx</PackageCertificateKeyFile>
-    <PackageCertificateThumbprint>A03B39B8421B1F9245090AA89BC8456E37EFC207</PackageCertificateThumbprint>
+    <PackageCertificateKeyFile>produproperty_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateThumbprint>00E08BE2F9C7C3416C0B6C6D2A546F422497C8EE</PackageCertificateThumbprint>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <AppxPackageDir>Y:\AppPackages\</AppxPackageDir>
     <AppxBundle>Always</AppxBundle>
@@ -99,6 +99,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="produproperty_StoreKey.pfx" />
+    <None Include="produproperty_TemporaryKey.pfx" />
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
@@ -111,6 +112,8 @@
     <Compile Include="model.cs" />
     <Compile Include="ImpliedFolderStorage.cs" />
     <Compile Include="NewNoteStorage.cs" />
+    <Compile Include="ViewModel\FileMariyah.cs" />
+    <Compile Include="ViewModel\MartinRhfinwittModel.cs" />
     <Compile Include="ViewModel\NoteGoverment.cs" />
     <Compile Include="ViewModel\NotifyProperty.cs" />
     <Compile Include="option.xaml.cs">
@@ -118,10 +121,14 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\NoteStorage.cs" />
+    <Compile Include="ViewModel\TrenPhillip.cs" />
     <Compile Include="ViewModel\viewModel.cs" />
     <Compile Include="ViewModel\winmain.cs" />
     <Compile Include="View\DcBoxaproPage.cs" />
-    <Compile Include="ViewModel\MarvelousTonsortModel.cs" />
+    <Compile Include="View\KeyBehavior.cs" />
+    <Compile Include="View\MartinRhfinwittPage.xaml.cs">
+      <DependentUpon>MartinRhfinwittPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\NoteStoragePage.xaml.cs">
       <DependentUpon>NoteStoragePage.xaml</DependentUpon>
     </Compile>
@@ -198,6 +205,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\MartinRhfinwittPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\NoteStoragePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -213,6 +224,12 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\uwp\uwp\src\Framework\Framework\Framework.csproj">
+      <Project>{6163e3b1-803c-4de5-be3c-48e7a04bcf65}</Project>
+      <Name>Framework</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

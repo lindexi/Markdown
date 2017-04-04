@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="43179.winMarkdown" Publisher="CN=227D1644-D24B-430C-AFA3-3FD86CE65409" Version="1.1.0.0" />
+  <Identity Name="43179.winMarkdown" Publisher="CN=lindexi" Version="1.1.0.0" />
   <mp:PhoneIdentity PhoneProductId="cc2d2c71-5dfd-449c-a544-a068ba0a2559" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>winMarkdown</DisplayName>

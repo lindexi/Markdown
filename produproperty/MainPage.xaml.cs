@@ -4,6 +4,7 @@
 using produproperty.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -20,6 +21,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Microsoft.Toolkit.Uwp.UI.Controls;
+using produproperty.View;
 
 //“空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409 上有介绍
 
@@ -33,11 +35,24 @@ namespace produproperty
         public MainPage()
         {
             this.InitializeComponent();
-            ViewModel = (ViewModel.ViewModel) DataContext;
+            ViewModel = (ViewModel.ViewModel)DataContext;
             //text.Paste += Text_Paste;
+            ViewModel.OnNavigatedTo(this, Frame);
+            
+
+            Key = new KeyBehavior(Content);
+            Key.Add(new KeyAction(KeyAction.Ctrl + VirtualKey.S, e => Debug.Write("s")));
         }
 
-        public ViewModel.ViewModel ViewModel { get; set; }
+        private KeyBehavior Key
+        {
+            set; get;
+        }
+
+        public ViewModel.ViewModel ViewModel
+        {
+            get; set;
+        }
 
         //protected override void OnNavigatedTo(NavigationEventArgs e)
         //{

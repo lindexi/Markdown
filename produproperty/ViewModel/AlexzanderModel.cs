@@ -1,3 +1,5 @@
+using System;
+using Windows.Storage;
 using lindexi.uwp.Framework.ViewModel;
 
 namespace produproperty.ViewModel
@@ -28,5 +30,36 @@ namespace produproperty.ViewModel
 
         }
 
+        public override void ReceiveMessage(object sender, Message o)
+        {
+            //if (o is OpkaseyMessage)
+            //{
+            //    OpkaseyMessage message = (OpkaseyMessage)o;
+            //    ReadHarrison = true;
+            //    Read(message.File);
+            //}
+        }
+
+        private async void Read(FileMariyah message)
+        {
+            var file = message.File;
+            Str = await FileIO.ReadTextAsync(file);
+            ReadHarrison = false;
+        }
+
+        private bool _readHarrison = true;
+
+        public bool ReadHarrison
+        {
+            set
+            {
+                _readHarrison = value;
+                OnPropertyChanged();
+            }
+            get
+            {
+                return _readHarrison;
+            }
+        }
     }
 }

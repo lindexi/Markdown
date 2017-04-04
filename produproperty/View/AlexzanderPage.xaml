@@ -5,10 +5,37 @@
     xmlns:local="using:produproperty.View"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     DataContext="{Binding Source={StaticResource ViewModel},Path=[MartinRhfinwittModel].AlexzanderModel}"
     mc:Ignorable="d">
 
+    <FrameworkElement.Resources>
+        <local:BooleanVisibilityConvert x:Key="BooleanVisibilityConvert"></local:BooleanVisibilityConvert>
+    </FrameworkElement.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid
+           >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
 
+            <Grid Background="#565656">
+
+                <FrameworkElement.Resources>
+                </FrameworkElement.Resources>
+
+                <local:DcBoxaproPage Text="{x:Bind ViewModel.Str,Mode=TwoWay}"></local:DcBoxaproPage>
+
+
+            </Grid>
+            <Grid Grid.Column="1">
+                <controls:MarkdownTextBlock Text="{x:Bind ViewModel.Str,Mode=OneWay}" Width="200">
+
+                </controls:MarkdownTextBlock>
+
+            </Grid>
+        </Grid>
+        <ProgressRing IsActive="True" Visibility="{x:Bind ViewModel.ReadHarrison,Mode=OneWay,Converter={StaticResource BooleanVisibilityConvert}}"></ProgressRing>
     </Grid>
 </Page>

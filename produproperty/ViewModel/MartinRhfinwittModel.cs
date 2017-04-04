@@ -102,8 +102,8 @@ namespace produproperty.ViewModel
         {
             FolderPicker pick = new FolderPicker();
             pick.FileTypeFilter.Add(".txt");
-            var folder = await pick.PickSingleFolderAsync();
-            File.AddRange((await folder.GetFilesAsync()).Select(temp => new FileMariyah(temp)));
+            //var folder = await pick.PickSingleFolderAsync();
+            //File.AddRange((await folder.GetFilesAsync()).Select(temp => new FileMariyah(temp)));
             await Navigate();
 
             var file = File.FirstOrDefault(temp => string.Equals(temp.Name, "README.md", StringComparison.CurrentCultureIgnoreCase));

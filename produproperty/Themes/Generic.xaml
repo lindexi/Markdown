@@ -97,9 +97,4 @@
             </Setter.Value>
         </Setter>
     </Style>
-
-    <Style x:Key="Foobar" TargetType="TextBox"></Style>
-    <Style TargetType="view:Foobar" BasedOn="{StaticResource Foobar}">
-      
-    </Style>
 </ResourceDictionary>

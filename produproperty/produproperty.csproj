@@ -124,6 +124,9 @@
     <Compile Include="ViewModel\TrenPhillip.cs" />
     <Compile Include="ViewModel\viewModel.cs" />
     <Compile Include="ViewModel\winmain.cs" />
+    <Compile Include="View\AlexzanderPage.xaml.cs">
+      <DependentUpon>AlexzanderPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\DcBoxaproPage.cs" />
     <Compile Include="View\KeyBehavior.cs" />
     <Compile Include="View\MartinRhfinwittPage.xaml.cs">
@@ -204,6 +207,10 @@
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\AlexzanderPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\MartinRhfinwittPage.xaml">
       <SubType>Designer</SubType>

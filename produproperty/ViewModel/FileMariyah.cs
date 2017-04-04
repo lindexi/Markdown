@@ -2,8 +2,15 @@
 
 namespace produproperty.ViewModel
 {
-    class FileMariyah
+    public class FileMariyah
     {
-        public StorageFile File { get; set; }
+        public FileMariyah()
+        {
+        }
+
+        public StorageFile File
+        {
+            get; set;
+        }
     }
 }

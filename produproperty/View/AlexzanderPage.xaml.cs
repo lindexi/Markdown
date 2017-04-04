@@ -22,19 +22,15 @@ namespace produproperty.View
     /// <summary>
     /// 可用于自身或导航至 Frame 内部的空白页。
     /// </summary>
-    [ViewModel(ViewModel = typeof(MartinRhfinwittModel))]
-    public sealed partial class MartinRhfinwittPage : Page
+    [ViewModel(ViewModel = typeof(AlexzanderModel))]
+    public sealed partial class AlexzanderPage : Page
     {
-        public MartinRhfinwittPage()
+        public AlexzanderPage()
         {
             this.InitializeComponent();
-            ViewModel = (MartinRhfinwittModel) DataContext;
-            ViewModel.AlexzanderfFrame = AlexzanderPage;
-            ViewModel.KaydenSergioFrame = KaydenSergioPage;
-            ViewModel.TrenPhillipKarissaFrame = TrenPhillipKarissaPage;
-            ViewModel.Read();
+            ViewModel = (AlexzanderModel) DataContext;
         }
 
-        public MartinRhfinwittModel ViewModel { get; set; }
+        public AlexzanderModel ViewModel { get; set; }
     }
 }

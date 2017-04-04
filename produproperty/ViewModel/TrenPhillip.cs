@@ -1,6 +1,6 @@
 ﻿namespace produproperty.ViewModel
 {
-    class TrenPhillip : NotifyProperty
+    public class TrenPhillip : NotifyProperty
     {
 
         private string _corey;
@@ -12,7 +12,10 @@
 
         }
 
-        public FileMariyah File { get; set; }
+        public FileMariyah File
+        {
+            get; set;
+        }
 
         /// <summary>
         /// 标题

@@ -5,30 +5,39 @@
     xmlns:local="using:produproperty.View"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    DataContext="{Binding Source={StaticResource ViewModel},Path=[MartinRhfinwittModel]}"
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="8*"/>
-        </Grid.ColumnDefinitions>
-        <!--侧边-->
         <Grid>
-            
-        </Grid>
-        <Grid Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition Height="63*"/>
-            </Grid.RowDefinitions>
-            <!--标题-->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="8*" />
+            </Grid.ColumnDefinitions>
+            <!--侧边-->
             <Grid>
-                
+                <Frame x:Name="KaydenSergioPage"></Frame>
             </Grid>
-            
-            <Grid Grid.Row="1">
-                
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="63*" />
+                </Grid.RowDefinitions>
+                <!--标题-->
+                <Grid>
+                    <Frame x:Name="TrenPhillipKarissaPage"></Frame>
+                </Grid>
+
+                <Grid Grid.Row="1">
+                    <Frame x:Name="AlexzanderPage"></Frame>
+                </Grid>
             </Grid>
         </Grid>
+        <ProgressRing IsActive="True" 
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Stretch"></ProgressRing>
     </Grid>
 </Page>
+
+
+

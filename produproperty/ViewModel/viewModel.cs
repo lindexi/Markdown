@@ -25,7 +25,7 @@ using produproperty.View;
 
 namespace produproperty.ViewModel
 {
-    public class ViewModel :NavigateViewModel
+    public class ViewModel : NavigateViewModel
     {
         public ViewModel()
         {
@@ -76,7 +76,7 @@ namespace produproperty.ViewModel
                     Composite.Add((Composite)temp.AsType().GetConstructor(Type.EmptyTypes).Invoke(null));
                 }
             }
-            Navigate(typeof(MartinRhfinwittModel),null);
+            Navigate(typeof(MartinRhfinwittModel), null);
         }
     }
 

@@ -2,32 +2,111 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Storage;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using lindexi.uwp.Framework.ViewModel;
 
 namespace produproperty.ViewModel
 {
-    class MartinRhfinwittModel : ViewModelBase
+    public class MartinRhfinwittModel : NavigateViewModel
     {
+        public MartinRhfinwittModel()
+        {
+        }
+
         public KaydenSergioModel KaydenSergioModel
         {
             get; set;
         }
+
         public TrenPhillipKarissaModel TrenPhillipKarissaModel
         {
             get; set;
         }
+
+        public AlexzanderModel AlexzanderModel
+        {
+            get; set;
+        }
+
+        public Frame KaydenSergioFrame
+        {
+            set; get;
+        }
+
+        public Frame TrenPhillipKarissaFrame
+        {
+            set; get;
+        }
+
+        public Frame AlexzanderfFrame
+        {
+            set; get;
+        }
+
+
+
         public override void OnNavigatedFrom(object sender, object obj)
         {
+            AlexzanderModel.OnNavigatedFrom(this, obj);
+            TrenPhillipKarissaModel.OnNavigatedFrom(this, obj);
+            KaydenSergioModel.OnNavigatedFrom(this, obj);
         }
 
         public override void OnNavigatedTo(object sender, object obj)
         {
+            AlexzanderModel = new AlexzanderModel();
+            TrenPhillipKarissaModel = new TrenPhillipKarissaModel();
+            KaydenSergioModel = new KaydenSergioModel();
+
+            ViewModel = new List<ViewModelPage>();
+
+            ViewModel.Add(new ViewModelPage(AlexzanderModel));
+            ViewModel.Add(new ViewModelPage(TrenPhillipKarissaModel));
+            ViewModel.Add(new ViewModelPage(KaydenSergioModel));
+
+            foreach (var temp in Application.Current.GetType().GetTypeInfo().Assembly.DefinedTypes.Where(temp => temp.IsSubclassOf(typeof(Page))))
+            {
+                //获取特性，特性有包含ViewModel
+                var p = temp.GetCustomAttribute<ViewModelAttribute>();
+
+                var viewmodel = this.ViewModel.FirstOrDefault(t => t.Equals(p?.ViewModel));
+                if (viewmodel != null)
+                {
+                    viewmodel.Page = temp.AsType();
+                }
+            }
+
+            //AlexzanderModel.OnNavigatedTo(this, obj);
+            //TrenPhillipKarissaModel.OnNavigatedTo(this, obj);
+            //KaydenSergioModel.OnNavigatedTo(this, obj);
+
+            //Read();
         }
+
+
+        private List<FileMariyah> File { set; get; } = new List<FileMariyah>();
+
+        public async void Read()
+        {
+            await Navigate();
+        }
+
+
+        private async Task Navigate()
+        {
+            await Navigate(AlexzanderModel.GetType(), null, AlexzanderfFrame);
+            await Navigate(TrenPhillipKarissaModel.GetType(), null, TrenPhillipKarissaFrame);
+            await Navigate(KaydenSergioModel.GetType(), null, KaydenSergioFrame);
+        }
+
     }
 
-    class AlexzanderModel : ViewModelBase
+    public class AlexzanderModel : ViewModelBase
     {
         private string _str;
         public string Str
@@ -42,20 +121,26 @@ namespace produproperty.ViewModel
                 return _str;
             }
         }
+
         public override void OnNavigatedFrom(object sender, object obj)
         {
+
         }
 
         public override void OnNavigatedTo(object sender, object obj)
         {
+
         }
+
     }
 
     /// <summary>
     /// 侧边
     /// </summary>
-    class KaydenSergioModel : ViewModelBase
+    public class KaydenSergioModel : ViewModelBase
     {
+        public ObservableCollection<FileMariyah> File = new ObservableCollection<FileMariyah>();
+
         public override void OnNavigatedFrom(object sender, object obj)
         {
         }
@@ -63,9 +148,14 @@ namespace produproperty.ViewModel
         public override void OnNavigatedTo(object sender, object obj)
         {
         }
+
+        public void OpenFile()
+        {
+
+        }
     }
 
-    class TrenPhillipKarissaModel : ViewModelBase
+    public class TrenPhillipKarissaModel : ViewModelBase
     {
 
         public ObservableCollection<TrenPhillip> TrenPhillip

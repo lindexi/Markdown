@@ -10,7 +10,8 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <ListView ItemsSource="{x:Bind ViewModel.File}">
+        <ListView ItemsSource="{x:Bind ViewModel.File}"
+                  SelectedItem="{Binding Path=Haiden,Mode=TwoWay}">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="viewModel:FileMariyah">
                    <TextBlock Text="{x:Bind Name}"></TextBlock>

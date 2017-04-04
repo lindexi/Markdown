@@ -37,4 +37,21 @@ namespace produproperty.View
 
         public MartinRhfinwittModel ViewModel { get; set; }
     }
+
+    class BooleanVisibilityConvert:IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, string language)
+        {
+            if (value as bool? == true)
+            {
+                return Visibility.Visible;
+            }
+            return Visibility.Collapsed;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        {
+            return null;
+        }
+    }
 }

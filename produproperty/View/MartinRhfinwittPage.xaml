@@ -7,6 +7,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     DataContext="{Binding Source={StaticResource ViewModel},Path=[MartinRhfinwittModel]}"
     mc:Ignorable="d">
+    <FrameworkElement.Resources>
+        <local:BooleanVisibilityConvert x:Key="BooleanVisibilityConvert"></local:BooleanVisibilityConvert>
+    </FrameworkElement.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid>
@@ -33,7 +36,7 @@
                 </Grid>
             </Grid>
         </Grid>
-        <ProgressRing IsActive="True" 
+        <ProgressRing IsActive="True" Visibility="{x:Bind ViewModel.ReadHarrison,Converter={StaticResource BooleanVisibilityConvert},Mode=OneWay}"
                       HorizontalAlignment="Stretch"
                       VerticalAlignment="Stretch"></ProgressRing>
     </Grid>

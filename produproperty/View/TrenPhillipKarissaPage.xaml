@@ -10,7 +10,11 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <ListView ItemsSource="{x:Bind ViewModel.TrenPhillip}">
+        <ListView ItemsSource="{x:Bind ViewModel.TrenPhillip}"
+                  SelectedItem="{Binding Path=File,Mode=TwoWay}"
+                  ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                  ScrollViewer.HorizontalScrollMode="Enabled"                  
+                  ScrollViewer.VerticalScrollMode="Disabled">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Horizontal"></StackPanel>

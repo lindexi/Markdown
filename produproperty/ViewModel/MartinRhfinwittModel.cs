@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -82,6 +81,13 @@ namespace produproperty.ViewModel
                 }
             }
 
+            foreach (var temp in Application.Current.GetType().GetTypeInfo().Assembly.DefinedTypes.Where(temp => temp.IsSubclassOf(typeof(Composite))))
+            {
+                Composite.Add((Composite)temp.AsType().GetConstructor(Type.EmptyTypes).Invoke(null));
+            }
+
+            SendMessageHandler = ReceiveMessage;
+
             //AlexzanderModel.OnNavigatedTo(this, obj);
             //TrenPhillipKarissaModel.OnNavigatedTo(this, obj);
             //KaydenSergioModel.OnNavigatedTo(this, obj);
@@ -97,8 +103,30 @@ namespace produproperty.ViewModel
             FolderPicker pick = new FolderPicker();
             pick.FileTypeFilter.Add(".txt");
             var folder = await pick.PickSingleFolderAsync();
-            File.AddRange((await folder.GetFilesAsync()).Select(temp=>new FileMariyah(temp)));
+            File.AddRange((await folder.GetFilesAsync()).Select(temp => new FileMariyah(temp)));
             await Navigate();
+
+            var file = File.FirstOrDefault(temp => string.Equals(temp.Name, "README.md", StringComparison.CurrentCultureIgnoreCase));
+            if (file != null)
+            {
+                SendMessageHandler.Invoke(this, new OpkaseyMessage(this, file));
+            }
+            ReadHarrison = false;
+        }
+
+        private bool _readHarrison = true;
+
+        public bool ReadHarrison
+        {
+            set
+            {
+                _readHarrison = value;
+                OnPropertyChanged();
+            }
+            get
+            {
+                return _readHarrison;
+            }
         }
 
 
@@ -111,83 +139,36 @@ namespace produproperty.ViewModel
 
     }
 
-    public class AlexzanderModel : ViewModelBase
+    class OpkaseyMessage : Message
     {
-        private string _str;
-        public string Str
+        public OpkaseyMessage(ViewModelBase source, FileMariyah file) : base(source)
         {
-            set
-            {
-                _str = value;
-                OnPropertyChanged();
-            }
-            get
-            {
-                return _str;
-            }
+            File = file;
         }
 
-        public override void OnNavigatedFrom(object sender, object obj)
-        {
-
-        }
-
-        public override void OnNavigatedTo(object sender, object obj)
-        {
-
-        }
-
-    }
-
-    /// <summary>
-    /// 侧边
-    /// </summary>
-    public class KaydenSergioModel : ViewModelBase
-    {
-        public ObservableCollection<FileMariyah> File { set; get; } = new ObservableCollection<FileMariyah>();
-
-        public override void OnNavigatedFrom(object sender, object obj)
-        {
-        }
-
-        public override void OnNavigatedTo(object sender, object obj)
-        {
-            List<FileMariyah> file = obj as List<FileMariyah>;
-            if (file == null)
-            {
-                return;
-            }
-            _file = file;
-            foreach (var temp in file)
-            {
-                File.Add(temp);
-            }
-        }
-
-        private List<FileMariyah> _file;
-
-        public void OpenFile()
-        {
-
-        }
-    }
-
-    public class TrenPhillipKarissaModel : ViewModelBase
-    {
-
-        public ObservableCollection<TrenPhillip> TrenPhillip
+        public FileMariyah File
         {
             get; set;
         }
+    }
 
-        public override void OnNavigatedFrom(object sender, object obj)
+    class OpkaseyComposite : Composite
+    {
+        public OpkaseyComposite()
         {
-
+            Message = typeof(OpkaseyMessage);
         }
 
-        public override void OnNavigatedTo(object sender, object obj)
+        public override void Run(ViewModelBase source, Message o)
         {
-           
+            MartinRhfinwittModel viewModel = source as MartinRhfinwittModel;
+            OpkaseyMessage message = o as OpkaseyMessage;
+            if (viewModel != null && message != null)
+            {
+                viewModel.TrenPhillipKarissaModel.ReceiveMessage(viewModel, message);
+                viewModel.AlexzanderModel.ReceiveMessage(viewModel, message);
+                viewModel.KaydenSergioModel.ReceiveMessage(viewModel, message);
+            }
         }
     }
 }

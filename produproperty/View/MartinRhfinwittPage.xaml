@@ -11,8 +11,8 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition Width="8*" />
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="6*" />
             </Grid.ColumnDefinitions>
             <!--侧边-->
             <Grid>
@@ -20,7 +20,7 @@
             </Grid>
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition />
+                    <RowDefinition Height="50"/>
                     <RowDefinition Height="63*" />
                 </Grid.RowDefinitions>
                 <!--标题-->

@@ -8,6 +8,16 @@ namespace produproperty.ViewModel
         {
         }
 
+        public FileMariyah(StorageFile file)
+        {
+            File = file;
+        }
+
+        public string Name
+        {
+            get { return File.Name; }
+        }
+
         public StorageFile File
         {
             get; set;

@@ -128,6 +128,9 @@
       <DependentUpon>AlexzanderPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\DcBoxaproPage.cs" />
+    <Compile Include="View\KaydenSergioPage.xaml.cs">
+      <DependentUpon>KaydenSergioPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\KeyBehavior.cs" />
     <Compile Include="View\MartinRhfinwittPage.xaml.cs">
       <DependentUpon>MartinRhfinwittPage.xaml</DependentUpon>
@@ -137,6 +140,9 @@
     </Compile>
     <Compile Include="View\SplashPage.xaml.cs">
       <DependentUpon>SplashPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TrenPhillipKarissaPage.xaml.cs">
+      <DependentUpon>TrenPhillipKarissaPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="winmain_page.xaml.cs">
       <DependentUpon>winmain_page.xaml</DependentUpon>
@@ -212,6 +218,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\KaydenSergioPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MartinRhfinwittPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -221,6 +231,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\SplashPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TrenPhillipKarissaPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

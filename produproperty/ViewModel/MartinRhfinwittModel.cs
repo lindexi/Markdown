@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
+using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using lindexi.uwp.Framework.ViewModel;
@@ -93,15 +94,19 @@ namespace produproperty.ViewModel
 
         public async void Read()
         {
+            FolderPicker pick = new FolderPicker();
+            pick.FileTypeFilter.Add(".txt");
+            var folder = await pick.PickSingleFolderAsync();
+            File.AddRange((await folder.GetFilesAsync()).Select(temp=>new FileMariyah(temp)));
             await Navigate();
         }
 
 
         private async Task Navigate()
         {
-            await Navigate(AlexzanderModel.GetType(), null, AlexzanderfFrame);
-            await Navigate(TrenPhillipKarissaModel.GetType(), null, TrenPhillipKarissaFrame);
-            await Navigate(KaydenSergioModel.GetType(), null, KaydenSergioFrame);
+            await Navigate(AlexzanderModel.GetType(), File, AlexzanderfFrame);
+            await Navigate(TrenPhillipKarissaModel.GetType(), File, TrenPhillipKarissaFrame);
+            await Navigate(KaydenSergioModel.GetType(), File, KaydenSergioFrame);
         }
 
     }
@@ -139,7 +144,7 @@ namespace produproperty.ViewModel
     /// </summary>
     public class KaydenSergioModel : ViewModelBase
     {
-        public ObservableCollection<FileMariyah> File = new ObservableCollection<FileMariyah>();
+        public ObservableCollection<FileMariyah> File { set; get; } = new ObservableCollection<FileMariyah>();
 
         public override void OnNavigatedFrom(object sender, object obj)
         {
@@ -147,7 +152,19 @@ namespace produproperty.ViewModel
 
         public override void OnNavigatedTo(object sender, object obj)
         {
+            List<FileMariyah> file = obj as List<FileMariyah>;
+            if (file == null)
+            {
+                return;
+            }
+            _file = file;
+            foreach (var temp in file)
+            {
+                File.Add(temp);
+            }
         }
+
+        private List<FileMariyah> _file;
 
         public void OpenFile()
         {
@@ -170,7 +187,7 @@ namespace produproperty.ViewModel
 
         public override void OnNavigatedTo(object sender, object obj)
         {
-
+           
         }
     }
 }

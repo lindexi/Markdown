@@ -76,7 +76,7 @@ namespace produproperty.ViewModel
                     Composite.Add((Composite)temp.AsType().GetConstructor(Type.EmptyTypes).Invoke(null));
                 }
             }
-            Navigate(typeof(MartinRhfinwittModel), null);
+            Navigate(typeof(NoteStorageModel), null);
         }
     }
 

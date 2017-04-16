@@ -1,5 +1,6 @@
 using System;
 using Windows.Storage;
+using Windows.Storage.Pickers;
 using lindexi.uwp.Framework.ViewModel;
 
 namespace produproperty.ViewModel
@@ -27,10 +28,15 @@ namespace produproperty.ViewModel
 
         public override void OnNavigatedTo(object sender, object obj)
         {
-
+            //Ω¯––≤‚ ‘
+            //FileOpenPicker pick = new FileOpenPicker();
+            //pick.FileTypeFilter.Add(".txt");
+            //var file = await pick.PickSingleFileAsync();
+            //string str = await FileIO.ReadTextAsync(file);
+            //Tiroll.Guidanceroll(str);
         }
 
-        public override void ReceiveMessage(object sender, Message o)
+        public override void ReceiveMessage(object sender, IMessage o)
         {
             //if (o is OpkaseyMessage)
             //{

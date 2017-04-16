@@ -6,6 +6,7 @@
     xmlns:view="using:produproperty"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    DataContext="{Binding Source={StaticResource ViewModel},Path=[NoteStorageModel]}"
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -15,10 +16,12 @@
                 <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
             <Grid>
-                <TextBlock Text="{x:Bind View.FoundEmptFolder}"
+                <TextBlock Text="{x:Bind ViewModel.FoundEmptFolder}"
+                           Visibility="{x:Bind ViewModel.FoundEmptFolderVisibility,Mode=OneWay}"
                            TextWrapping="Wrap"
                            HorizontalAlignment="Center"></TextBlock>
-                <ListView ItemsSource="{x:Bind View.FolderStorage}" IsItemClickEnabled="True">
+                <ListView ItemsSource="{x:Bind ViewModel.FolderStorage}" IsItemClickEnabled="True"
+                          ItemClick="{x:Bind ViewModel.Navigate}">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="HorizontalContentAlignment"

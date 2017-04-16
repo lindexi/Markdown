@@ -12,7 +12,7 @@
     <DefaultLanguage>zh-CN</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.14393.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10586.0</TargetPlatformMinVersion>
+    <TargetPlatformMinVersion>10.0.14393.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -112,7 +112,9 @@
     <Compile Include="model.cs" />
     <Compile Include="ImpliedFolderStorage.cs" />
     <Compile Include="NewNoteStorage.cs" />
+    <Compile Include="Tiroll.cs" />
     <Compile Include="ViewModel\AlexzanderModel.cs" />
+    <Compile Include="ViewModel\CombinationComposite.cs" />
     <Compile Include="ViewModel\FileMariyah.cs" />
     <Compile Include="ViewModel\KaydenSergioModel.cs" />
     <Compile Include="ViewModel\MartinRhfinwittModel.cs" />
@@ -259,7 +261,7 @@
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>produproperty_StoreKey.pfx</AssemblyOriginatorKeyFile>

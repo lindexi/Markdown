@@ -34,7 +34,7 @@ namespace produproperty.ViewModel
             }
         }
 
-        public override void ReceiveMessage(object sender, Message o)
+        public override void ReceiveMessage(object sender, IMessage o)
         {
             if (o is OpkaseyMessage)
             {

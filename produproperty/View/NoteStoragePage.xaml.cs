@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using lindexi.uwp.Framework.ViewModel;
 using produproperty.ViewModel;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
@@ -21,21 +22,22 @@ namespace produproperty.View
     /// <summary>
     /// 可用于自身或导航至 Frame 内部的空白页。
     /// </summary>
+    [ViewModel(ViewModel = typeof(NoteStorageModel))]
     public sealed partial class NoteStoragePage : Page
     {
         public NoteStoragePage()
         {
-            View = new NoteStorageModel();
             this.InitializeComponent();
-            NavigationCacheMode=NavigationCacheMode.Enabled;
+            //NavigationCacheMode = NavigationCacheMode.Enabled;
+            ViewModel = (NoteStorageModel) DataContext;
         }
 
-        private NoteStorageModel View
+        public NoteStorageModel ViewModel
         {
-            set;
-            get;
+            get; set;
         }
 
 
+   
     }
 }

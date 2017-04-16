@@ -49,7 +49,7 @@ namespace produproperty.ViewModel
             TrenPhillip = new ObservableCollection<TrenPhillip>();
         }
 
-        public override void ReceiveMessage(object sender, Message o)
+        public override void ReceiveMessage(object sender, IMessage o)
         {
             OpkaseyMessage message = o as OpkaseyMessage;
             if (message != null)

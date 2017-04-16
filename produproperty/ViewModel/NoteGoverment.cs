@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
@@ -89,6 +90,10 @@ namespace produproperty.ViewModel
         {
             //放入记录
             ImpliedFolderStorage folder = new ImpliedFolderStorage(storageFolder);
+            if (FolderStorage.Any(temp => temp.Equals(folder)))
+            {
+                return;
+            }
             FolderStorage.Add(folder);
             folder.Token = StorageApplicationPermissions.FutureAccessList.Add(storageFolder);
             await Storage();

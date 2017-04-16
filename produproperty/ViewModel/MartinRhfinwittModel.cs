@@ -159,7 +159,7 @@ namespace produproperty.ViewModel
             Message = typeof(OpkaseyMessage);
         }
 
-        public override void Run(ViewModelBase source, Message o)
+        public override void Run(ViewModelBase source, IMessage o)
         {
             MartinRhfinwittModel viewModel = source as MartinRhfinwittModel;
             OpkaseyMessage message = o as OpkaseyMessage;

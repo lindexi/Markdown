@@ -17,7 +17,8 @@ namespace produproperty.ViewModel
         private void ZunigaHarrison()
         {
             _fileHaiden = true;
-            SendMessageHandler.Invoke(this, new OpkaseyMessage(this, Haiden));
+            //Send.Invoke(this, new OpkaseyMessage(this, Haiden));
+            
         }
 
         public FileMariyah Haiden
@@ -34,7 +35,7 @@ namespace produproperty.ViewModel
             }
         }
 
-        public override void ReceiveMessage(object sender, IMessage o)
+        public void ReceiveMessage(object sender, IMessage o)
         {
             if (o is OpkaseyMessage)
             {

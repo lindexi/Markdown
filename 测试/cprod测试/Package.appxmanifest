@@ -5,18 +5,18 @@
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
   IgnorableNamespaces="uap mp">
 
-  <Identity Name="29b3fc7c-df6c-4011-9ad6-0a89e069d58e"
+  <Identity Name="d399ecfe-bd8e-4213-a7bb-1c5aa06c7da2"
             Publisher="CN=linde"
             Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="29b3fc7c-df6c-4011-9ad6-0a89e069d58e" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="d399ecfe-bd8e-4213-a7bb-1c5aa06c7da2" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>cprod测试</DisplayName>
     <PublisherDisplayName>linde</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
-  
+
   <Dependencies>
     <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
   </Dependencies>
@@ -25,7 +25,7 @@
     <Resource Language="x-generate" />
   </Resources>
   <Applications>
-    <Application Id="vstest.executionengine.universal.App" 
+    <Application Id="vstest.executionengine.universal.App"
         Executable="$targetnametoken$.exe"
         EntryPoint="cprod测试.App">
       <uap:VisualElements
@@ -40,6 +40,6 @@
     </Application>
   </Applications>
   <Capabilities>
-    <Capability Name="internetClient" />
-  </Capabilities> 
+    <Capability Name="internetClientServer" />
+  </Capabilities>
 </Package>

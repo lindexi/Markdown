@@ -73,7 +73,14 @@ namespace produproperty.ViewModel
 
                 foreach (var temp in applacationAssembly.DefinedTypes.Where(temp => temp.IsSubclassOf(typeof(Composite))))
                 {
-                    Composite.Add((Composite)temp.AsType().GetConstructor(Type.EmptyTypes).Invoke(null));
+                    try
+                    {
+                        Composite.Add((Composite) temp.AsType().GetConstructor(Type.EmptyTypes).Invoke(null));
+                    }
+                    catch 
+                    {
+                        
+                    }
                 }
             }
             Navigate(typeof(NoteStorageModel), null);

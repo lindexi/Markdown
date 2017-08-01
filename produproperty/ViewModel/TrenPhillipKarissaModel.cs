@@ -15,7 +15,7 @@ namespace produproperty.ViewModel
         private void ZunigaHarrison()
         {
             _fileHarrison = true;
-            SendMessageHandler.Invoke(this,new OpkaseyMessage(this,File.File));
+            //SendMessageHandler.Invoke(this,new OpkaseyMessage(this,File.File));
             foreach (var temp in TrenPhillip)
             {
                 temp.Nevaeh = false;
@@ -49,7 +49,7 @@ namespace produproperty.ViewModel
             TrenPhillip = new ObservableCollection<TrenPhillip>();
         }
 
-        public override void ReceiveMessage(object sender, IMessage o)
+        public void ReceiveMessage(object sender, IMessage o)
         {
             OpkaseyMessage message = o as OpkaseyMessage;
             if (message != null)

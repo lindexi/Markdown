@@ -86,7 +86,7 @@ namespace produproperty.ViewModel
                 Composite.Add((Composite)temp.AsType().GetConstructor(Type.EmptyTypes).Invoke(null));
             }
 
-            SendMessageHandler = ReceiveMessage;
+            //SendMessageHandler = ReceiveMessage;
 
             //AlexzanderModel.OnNavigatedTo(this, obj);
             //TrenPhillipKarissaModel.OnNavigatedTo(this, obj);
@@ -109,7 +109,7 @@ namespace produproperty.ViewModel
             var file = File.FirstOrDefault(temp => string.Equals(temp.Name, "README.md", StringComparison.CurrentCultureIgnoreCase));
             if (file != null)
             {
-                SendMessageHandler.Invoke(this, new OpkaseyMessage(this, file));
+                //SendMessageHandler.Invoke(this, new OpkaseyMessage(this, file));
             }
             ReadHarrison = false;
         }
@@ -132,9 +132,9 @@ namespace produproperty.ViewModel
 
         private async Task Navigate()
         {
-            await Navigate(AlexzanderModel.GetType(), File, AlexzanderfFrame);
-            await Navigate(TrenPhillipKarissaModel.GetType(), File, TrenPhillipKarissaFrame);
-            await Navigate(KaydenSergioModel.GetType(), File, KaydenSergioFrame);
+             Navigate(AlexzanderModel.GetType(), File, AlexzanderfFrame);
+             Navigate(TrenPhillipKarissaModel.GetType(), File, TrenPhillipKarissaFrame);
+             Navigate(KaydenSergioModel.GetType(), File, KaydenSergioFrame);
         }
 
     }

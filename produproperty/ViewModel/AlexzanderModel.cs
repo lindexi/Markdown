@@ -36,7 +36,7 @@ namespace produproperty.ViewModel
             //Tiroll.Guidanceroll(str);
         }
 
-        public override void ReceiveMessage(object sender, IMessage o)
+        public void ReceiveMessage(object sender, IMessage o)
         {
             //if (o is OpkaseyMessage)
             //{

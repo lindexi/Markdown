@@ -251,12 +251,7 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\uwp\uwp\src\Framework\Framework\Framework.csproj">
-      <Project>{6163e3b1-803c-4de5-be3c-48e7a04bcf65}</Project>
-      <Name>Framework</Name>
-    </ProjectReference>
-  </ItemGroup>
+  <Import Project="..\..\uwp\uwp\src\Framework\Framework\Framework.projitems" Label="Shared" />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

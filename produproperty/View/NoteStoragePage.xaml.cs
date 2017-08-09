@@ -28,16 +28,15 @@ namespace produproperty.View
         public NoteStoragePage()
         {
             this.InitializeComponent();
-            //NavigationCacheMode = NavigationCacheMode.Enabled;
-            ViewModel = (NoteStorageModel) DataContext;
+            //ViewModel = (NoteStorageModel) DataContext;
         }
 
         public NoteStorageModel ViewModel
         {
             get; set;
-        }
+        } = new NoteStorageModel();
 
 
-   
+
     }
 }

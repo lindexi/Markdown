@@ -8,9 +8,6 @@
     <Application.Resources>
         <ResourceDictionary>
             <viewModel:ViewModel x:Key="ViewModel"></viewModel:ViewModel>
-            <!--<ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Themes/Generic.xaml"></ResourceDictionary>
-            </ResourceDictionary.MergedDictionaries>-->
         </ResourceDictionary>
     </Application.Resources>
 </Application>

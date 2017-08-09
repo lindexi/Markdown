@@ -35,9 +35,9 @@ namespace produproperty
         public MainPage()
         {
             this.InitializeComponent();
-            ViewModel = (ViewModel.ViewModel)DataContext;
+            //ViewModel = (ViewModel.ViewModel)DataContext;
             //text.Paste += Text_Paste;
-            ViewModel.OnNavigatedTo(this, Frame);
+            //ViewModel.OnNavigatedTo(this, Frame);
             
 
             Key = new KeyBehavior(Content);

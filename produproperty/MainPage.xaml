@@ -13,59 +13,42 @@
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
-        <!--<view:Foobar></view:Foobar>-->
-        <Frame x:Name="Frame"></Frame>
-        
-        <!--<Grid.ColumnDefinitions>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition Width="Auto"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-
-        <Grid Background="#565656">
-            --><!--<FrameworkElement.Resources>
-                <ResourceDictionary Source="Themes/Generic.xaml"></ResourceDictionary>
-            </FrameworkElement.Resources>--><!--
-            <view:DcBoxaproPage Text="{x:Bind ViewModel.Str,Mode=TwoWay}" Storaged="{x:Bind ViewModel.Read}"></view:DcBoxaproPage>
-            --><!--<RichEditBox TextChanged="RichEditBox_OnTextChanged" Style="{StaticResource RichEditBoxStyle1}"></RichEditBox>--><!--
-        </Grid>
-        <Grid Grid.Column="1">
-            <controls:MarkdownTextBlock Text="{x:Bind ViewModel.Str,Mode=OneWay}" Width="200">
-                
-            </controls:MarkdownTextBlock>
-
-        </Grid>-->
-
-        <!--<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" AllowDrop="True"
-              Drop="{x:Bind view.Dropimg}" DragOver="Grid_DragOver" KeyDown="text_KeyDown" KeyUp="text_KeyUp">
-
-            -->
-        <!--<Grid>
+        <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition />
-                <RowDefinition Height="auto"/>
+                <RowDefinition Height="8*"/>
+                <RowDefinition Height="305*"/>
+                <RowDefinition Height="7*"/>
             </Grid.RowDefinitions>
-            <TextBox Text="{x:Bind view.Name,Mode=TwoWay}" Grid.Row="0" Margin="10,10,10,10"/>
-            <TextBox x:Name="text" Text="{Binding Path=text,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Margin="10,10,10,10" Grid.Row="1" TextWrapping="Wrap" AcceptsReturn="True" IsReadOnly="{x:Bind view.Writetext,Mode=OneWay}" SelectionChanged="text_SelectionChanged" TextAlignment="Left" FontSize="{x:Bind view.Width,Mode=OneWay}"/>
-            -->
-        <!--<RichEditBox x:Name="rtext" Margin="10,10,10,10"/>-->
-        <!--
+            <Grid Background="#FF262626">
+                <!--标题-->
+            </Grid>
+            <Grid Grid.Row="1" Grid.RowSpan="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="46*"/>
+                    <ColumnDefinition Width="315*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Background="#FFA2A5A5">
+                    <!--文件列表-->
+                    <view:NoteStoragePage></view:NoteStoragePage>
+                </Grid>
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="37*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Background="#FF00FFA2">
+                        <!--显示多个打开-->
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <!--写字的页面-->
 
-            <TextBlock Text="{x:Bind view.Reminder,Mode=OneWay}" Grid.Row="2" Margin="10,10,10,10" TextWrapping="Wrap"/>
-
-        </Grid>-->
-        <!--<Button Content="确定" Click="{x:Bind view.property}" Margin="121,300,0,308"/>-->
-        <!--
-        </Grid>-->
+                    </Grid>
+                </Grid>
+            </Grid>
+            <Grid Grid.Row="2" Background="Black">
+                <!--底层的页面-->
+            </Grid>
+        </Grid>
+       
     </Grid>
-    <!--<Page.TopAppBar>
-        <CommandBar>
-            -->
-    <!--<AppBarButton Icon="Add" Content="新建" Click="{x:Bind view.fileaddress}"/>-->
-    <!--<AppBarButton Icon="OpenFile" Content="打开" Click="{x:Bind view.file_open}" />
-            <AppBarButton Icon="Save" Content="保存" Click="{x:Bind view.Storage}"/>
-            <AppBarButton Icon="Setting" Content="设置" Click="option"/>-->
-    <!--
-        </CommandBar>
-    </Page.TopAppBar>-->
 </Page>

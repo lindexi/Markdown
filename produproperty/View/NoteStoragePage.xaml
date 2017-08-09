@@ -6,8 +6,8 @@
     xmlns:view="using:produproperty"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    DataContext="{Binding Source={StaticResource ViewModel},Path=[NoteStorageModel]}"
     mc:Ignorable="d">
+    <!--DataContext="{Binding Source={StaticResource ViewModel},Path=[NoteStorageModel]}"-->
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid>
@@ -18,7 +18,7 @@
             <Grid>
                 <TextBlock Text="{x:Bind ViewModel.FoundEmptFolder}"
                            Visibility="{x:Bind ViewModel.FoundEmptFolderVisibility,Mode=OneWay}"
-                           TextWrapping="Wrap"
+                           TextWrapping="Wrap" Margin="10,100,10,10"
                            HorizontalAlignment="Center"></TextBlock>
                 <ListView ItemsSource="{x:Bind ViewModel.FolderStorage}" IsItemClickEnabled="True"
                           ItemClick="{x:Bind ViewModel.Navigate}">
@@ -50,9 +50,8 @@
                     <Button Margin="10,10,10,10" Content="新建"
                             HorizontalAlignment="Stretch"
                             ></Button>
-                    <Button Margin="10,10,10,10" Content="打开"
+                    <Button Margin="10,10,10,20" Content="打开"
                             HorizontalAlignment="Stretch"></Button>
-
                 </StackPanel>
             </Grid>
         </Grid>

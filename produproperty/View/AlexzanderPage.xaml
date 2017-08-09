@@ -6,8 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    DataContext="{Binding Source={StaticResource ViewModel},Path=[MartinRhfinwittModel].AlexzanderModel}"
     mc:Ignorable="d">
+    <!--DataContext="{Binding Source={StaticResource ViewModel},Path=[MartinRhfinwittModel].AlexzanderModel}"-->
 
     <FrameworkElement.Resources>
         <local:BooleanVisibilityConvert x:Key="BooleanVisibilityConvert"></local:BooleanVisibilityConvert>
@@ -24,7 +24,7 @@
                 <FrameworkElement.Resources>
                 </FrameworkElement.Resources>
 
-                <local:DcBoxaproPage Text="{x:Bind ViewModel.Str,Mode=TwoWay}"></local:DcBoxaproPage>
+                <local:DcBoxaproPage Background="White" Text="{x:Bind ViewModel.Str,Mode=TwoWay}"></local:DcBoxaproPage>
 
 
             </Grid>

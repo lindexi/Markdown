@@ -41,7 +41,7 @@
                     </Grid>
                     <Grid Grid.Row="1">
                         <!--写字的页面-->
-
+                        <view:AlexzanderPage></view:AlexzanderPage>
                     </Grid>
                 </Grid>
             </Grid>

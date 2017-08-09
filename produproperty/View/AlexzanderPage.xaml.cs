@@ -28,9 +28,9 @@ namespace produproperty.View
         public AlexzanderPage()
         {
             this.InitializeComponent();
-            ViewModel = (AlexzanderModel) DataContext;
+            //ViewModel = (AlexzanderModel) DataContext;
         }
 
-        public AlexzanderModel ViewModel { get; set; }
+        public AlexzanderModel ViewModel { get; set; } = new AlexzanderModel();
     }
 }

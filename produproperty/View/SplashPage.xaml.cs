@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -31,6 +32,7 @@ namespace produproperty.View
 
         private async void Read()
         {
+            await Task.Delay(100);
             await AccountGoverment.Read();
             var frame = (Windows.UI.Xaml.Controls.Frame) Window.Current.Content;
             frame.Navigate(typeof(MainPage));

@@ -13,7 +13,7 @@ namespace produproperty.View
         public KeyBehavior(UIElement e)
         {
             e.KeyDown += OnKeyDown;
-            e.AddHandler(UIElement.KeyDownEvent,new KeyEventHandler(OnKeyDown),true);
+            e.AddHandler(UIElement.KeyDownEvent, new KeyEventHandler(OnKeyDown), true);
             _element = e;
         }
 
@@ -96,7 +96,7 @@ namespace produproperty.View
 
         public void Run()
         {
-            if (!Execute || !_action)
+            if (!CanExecute() || !_action)
             {
                 return;
             }
@@ -105,7 +105,7 @@ namespace produproperty.View
             _action = true;
         }
 
-        public bool Execute { get; set; } = true;
+        public Func<bool> CanExecute { get; set; } = () => true;
         private bool _action = true;
 
         public const string Ctrl = "ctrl";

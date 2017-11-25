@@ -20,13 +20,7 @@
             </Grid.ColumnDefinitions>
 
             <Grid Background="#565656">
-
-                <FrameworkElement.Resources>
-                </FrameworkElement.Resources>
-
                 <local:DcBoxaproPage Background="White" Text="{x:Bind ViewModel.Str,Mode=TwoWay}"></local:DcBoxaproPage>
-
-
             </Grid>
             <Grid Grid.Column="1">
                 <controls:MarkdownTextBlock Text="{x:Bind ViewModel.Str,Mode=OneWay}" Width="200">

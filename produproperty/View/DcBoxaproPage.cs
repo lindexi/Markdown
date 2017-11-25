@@ -27,15 +27,14 @@ namespace produproperty.View
             
             TextChanged += DcBoxaproPage_TextChanged;
 
-
-            //Key = new KeyBehavior(this);
-            //Key.Add(new KeyAction("ctrl+S", (e) =>
-            //{
-            //    e.Execute = false;
-            //    Storage();
-            //    e.Execute = true;
-            //}));
+            Key = new KeyBehavior(this);
+            Key.Add(new KeyAction("ctrl+S", (e) =>
+            {
+                Storage();
+            }));
         }
+
+
 
         private void Storage()
         {

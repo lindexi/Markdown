@@ -33,7 +33,8 @@ namespace produproperty.View
         private async void Read()
         {
             await Task.Delay(100);
-            await AccountGoverment.Read();
+            //await AccountGoverment.Read();
+            //((ViewModel.ViewModel) App.Current.Resources["ViewModel"]).Read();
             var frame = (Windows.UI.Xaml.Controls.Frame) Window.Current.Content;
             frame.Navigate(typeof(MainPage));
         }

@@ -32,5 +32,13 @@ namespace produproperty.View
         }
 
         public KaydenSergioModel ViewModel { get; set; }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            ViewModel = (KaydenSergioModel) e.Parameter;
+            DataContext = e.Parameter;
+
+            base.OnNavigatedTo(e);
+        }
     }
 }
